@@ -1,9 +1,13 @@
 
 const express = require('express');
 const app = express();
-require('dotenv').config();
-app.use(express.json());
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+// const cors = require('cors');
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(express.json());
+require('dotenv').config();
 mongoose.connect(process.env.MONGO_URI).then((res) => {
     console.log('Connected to MongoDB');
     app.listen(process.env.SERVER_PORT, () => {
