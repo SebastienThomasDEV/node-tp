@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const CommandeSchema = new mongoose.Schema({
     name: {
+        unique: true,
         type: String,
         required: true
     },
