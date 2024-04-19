@@ -1,19 +1,19 @@
 const controllerBar = {};
-const Bar = require('../models/Bars');
+const Bars = require('../models/Bars');
 
 controllerBar.getAll = (req, res) => {
-    Bar.findAll()
+    Bars.find()
         .then((queryResult) => res.json(queryResult))
         .catch((err) => res.json(err));
 };
 
-controllerBar.get = (req, res) => {
-    Bar.find({ _id: req.params.id })
+controllerBar.getBar = (req, res) => {
+    Bars.find({ _id: req.params.id })
         .then((queryResult) => res.json(queryResult))
         .catch((err) => res.json(err));
 };
 
-controllerBar.post = (req, res) => {
+controllerBar.generate = (req, res) => {
     const bars_data = {
         name: req.body.name,
         adresse: req.body.adresse,
@@ -22,7 +22,7 @@ controllerBar.post = (req, res) => {
         description: req.body.description
     }
 
-    Bar.create(bars_data)
+    Bars.create(bars_data)
         .then((queryResult) => res.json(queryResult))
         .catch((err) => res.json(err));
 }
@@ -35,8 +35,8 @@ controllerBar.update = (req, res) => {
         .catch((err) => res.json(err));
 };
 
-controllerBar.delete = (req, res) => {
-    Commande.deleteOne({_id: req.params.id})
+controllerBar.remove = (req, res) => {
+    Commande.deleteOne({ _id: req.params.id })
         .then((queryResult) => res.json(queryResult))
         .catch((err) => res.json(err));
 }
