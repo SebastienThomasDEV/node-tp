@@ -9,9 +9,9 @@ const express = require('express');
 const biereRouter = express.Router();
 const controllerBiere = require('../controllers/BiereController');
 
-biereRouter.get('/biere/:id_biere', controllerBiere.show);
-biereRouter.get('/bars/:id_bar/biere', controllerBiere.store);
-biereRouter.post('/bars/:id_bar/biere', controllerBiere.getAll);
+biereRouter.get('/biere/:id_biere', controllerBiere.getAll);
+biereRouter.get('/bars/:id_bar/biere', controllerBiere.show);
+biereRouter.post('/bars/:id_bar/biere', controllerBiere.store);
 biereRouter.put('/bars/:id_biere', controllerBiere.update);
 biereRouter.delete('/bars/:id_biere', controllerBiere.delete);
 

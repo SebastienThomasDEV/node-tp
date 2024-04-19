@@ -14,10 +14,12 @@ mongoose.connect(process.env.MONGO_URI).then((res) => {
         console.log('Server is running on port 3000');
     });
     app.use('/commandes', require('./router/CommandeRouter'));
+    app.use('/bars', require('./router/BarsRouter'));
+    app.use('/biere', require('./router/BiereRouter'));
 }).catch((err) => {
     console.log(err);
     console.log("Not connected to MongoDB");
 });
 
-app.use('/biere', require('./router/BiereRouter'));
+
 
