@@ -65,7 +65,7 @@ BIERE_COMMANDE :
 
 // Liste des fichiers recommandés
 - models/
-  - bars.js
+  - Bars.js
   - biere.js
   - commande.js
   - biere_commande.js
