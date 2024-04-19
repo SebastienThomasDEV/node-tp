@@ -8,12 +8,15 @@ controllerBar.getAll = (req, res) => {
 };
 
 controllerBar.getBar = (req, res) => {
-    Bars.find({ _id: req.params.id })
+    Bars.find({ id: req.params.id })
         .then((queryResult) => res.json(queryResult))
         .catch((err) => res.json(err));
 };
 
 controllerBar.generate = (req, res) => {
+    if (!req.body.name || !req.body.adresse || !req.body.tel || !req.body.email || !req.body.description) {
+        return res.json('Veuillez remplir tous les champs');
+    }
     const bars_data = {
         name: req.body.name,
         adresse: req.body.adresse,
@@ -30,13 +33,13 @@ controllerBar.generate = (req, res) => {
 controllerBar.update = (req, res) => {
     const bars_data = {}
 
-    Product.updateOne({ _id: req.params.id }, bars_data)
+    Product.updateOne({ id: req.params.id }, bars_data)
         .then((queryResult) => res.json(queryResult))
         .catch((err) => res.json(err));
 };
 
 controllerBar.remove = (req, res) => {
-    Commande.deleteOne({ _id: req.params.id })
+    Commande.deleteOne({ id: req.params.id })
         .then((queryResult) => res.json(queryResult))
         .catch((err) => res.json(err));
 }
