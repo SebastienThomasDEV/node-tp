@@ -13,6 +13,15 @@ controllerBiere.getAll = (req, res) => {
         });
     }
 
+controllerBiere.show = (req, res) => {
+    Biere.findById(req.params.id)
+        .then((Biere) => {
+            res.json(Biere);
+        })
+        .catch((err) => {
+            res.json(err);
+        });
+}
 controllerBiere.store = (req, res) => {
     Biere.create(req.body)
         .then((result) => {
