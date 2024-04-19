@@ -27,4 +27,4 @@ const biereSchema = new mongoose.Schema({
         required: true
     }
 });
-module.exports = mongoose.model('Biere', biereSchema);
+module.exports = mongoose.model('biere', biereSchema);
