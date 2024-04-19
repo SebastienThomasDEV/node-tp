@@ -15,3 +15,5 @@ mongoose.connect(process.env.MONGO_URI).then((res) => {
     console.log("Not connected to MongoDB");
 });
 
+app.use('/biere', require('./router/BiereRouter'));
+
