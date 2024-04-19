@@ -8,16 +8,20 @@
 - La date d'une commande ne peut pas être supérieure à la date du jour
 - Quand je supprime un bars, je supprime toutes les biere et les commandes associées
 - Quand je supprime une biere, je supprime toutes les commandes associées
-- Quand je supprime une commande, je supprime toutes les biere_commande associées
-*/
+- Quand je supprime une commande, je supprime toutes les biere_commande associées*/
 
-const { body } = require("express-validator");
+const { body, param } = require("express-validator");
 
 const validateBiere = [
   body("name").isString().withMessage("Le nom d'une bière doit être renseigné"),
- body("description").isString().withMessage("La description d'une bière doit être renseignée"),
- body("degree").isFloat({ min: 0 }).withMessage("Le degré d'alcool d'une bière doit être renseigné"),
- body("prix").isFloat({ min: 0 }).withMessage("Le prix d'une bière doit être renseigné"),
+  body("description")
+    .isString()
+    .withMessage("La description d'une bière doit être renseignée"),
+  body("degree")
+    .isFloat({ min: 0 })
+    .withMessage("Le degre d'alcool d'une bière doit être renseigné"),
+  body("prix")
+    .isFloat({ min: 0 })
+    .withMessage("Le prix d'une bière doit être renseigné"),
 ];
-
 module.exports = validateBiere;
