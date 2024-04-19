@@ -30,8 +30,16 @@ controller.post = (req, res) => {
 controller.update = (req, res) => {
     const bars_data = {}
 
-    
+    Product.updateOne({ _id: req.params.id }, bars_data)
+        .then((queryResult) => res.json(queryResult))
+        .catch((err) => res.json(err));
+};
+
+controller.delete = (req, res) => {
+    Commande.deleteOne({_id: req.params.id})
+        .then((queryResult) => res.json(queryResult))
+        .catch((err) => res.json(err));
 }
 
 
-// faire le put, delete
+
