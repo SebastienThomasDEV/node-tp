@@ -8,7 +8,7 @@ const barsSchema = mongoose.Schema({
 
     name: {
         type : String, 
-        default: unique,
+        unique: true,
         required: true,
     },
 
