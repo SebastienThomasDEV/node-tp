@@ -9,7 +9,7 @@ mongoose.connect(process.env.MONGO_URI).then((res) => {
     app.listen(process.env.SERVER_PORT, () => {
         console.log('Server is running on port 3000');
     });
-    // app.use('/api');
+    app.use('/commandes', require('./router/CommandeRouter'));
 }).catch((err) => {
     console.log(err);
     console.log("Not connected to MongoDB");
