@@ -1,6 +1,7 @@
 const { query } = require('express');
 const Biere = require('../models/Biere');
 
+
 const controllerBiere = {};
 
 controllerBiere.getAll = (req, res) => {
@@ -14,9 +15,9 @@ controllerBiere.getAll = (req, res) => {
     }
 
 controllerBiere.show = (req, res) => {
-    Biere.findById(req.params.id)
-        .then((Biere) => {
-            res.json(Biere);
+    Biere.findByID(req.params.bar_id)
+        .then((biere) => {
+            res.json(biere);
         })
         .catch((err) => {
             res.json(err);
