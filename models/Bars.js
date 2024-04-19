@@ -28,7 +28,7 @@ const barsSchema = mongoose.Schema({
     },
 
     description: {
-        type: Text,
+        type: String,
         required: true,
     }
 })
