@@ -1,19 +1,19 @@
-const controller = {};
+const controllerBar = {};
 const Bar = require('../models/Bars');
 
-controller.getAll = (req, res) => {
+controllerBar.getAll = (req, res) => {
     Bar.findAll()
         .then((queryResult) => res.json(queryResult))
         .catch((err) => res.json(err));
 };
 
-controller.get = (req, res) => {
+controllerBar.get = (req, res) => {
     Bar.find({ _id: req.params.id })
         .then((queryResult) => res.json(queryResult))
         .catch((err) => res.json(err));
 };
 
-controller.post = (req, res) => {
+controllerBar.post = (req, res) => {
     const bars_data = {
         name: req.body.name,
         adresse: req.body.adresse,
@@ -27,7 +27,7 @@ controller.post = (req, res) => {
         .catch((err) => res.json(err));
 }
 
-controller.update = (req, res) => {
+controllerBar.update = (req, res) => {
     const bars_data = {}
 
     Product.updateOne({ _id: req.params.id }, bars_data)
@@ -35,11 +35,11 @@ controller.update = (req, res) => {
         .catch((err) => res.json(err));
 };
 
-controller.delete = (req, res) => {
+controllerBar.delete = (req, res) => {
     Commande.deleteOne({_id: req.params.id})
         .then((queryResult) => res.json(queryResult))
         .catch((err) => res.json(err));
 }
-
+module.exports = controllerBar;
 
 
