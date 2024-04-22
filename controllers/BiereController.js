@@ -1,4 +1,6 @@
+const { validationResult } = require('express-validator');
 const Biere = require('../models/Biere');
+const Bars = require('../models/Bars');
 
 
 const controllerBiere = {};
@@ -12,10 +14,11 @@ controllerBiere.getAll = (req, res) => {
             console.error(err);
             res.status(500).json({ message: "Une erreur est survenue lors de la récupération des bières." });
         });
+        console.log(`recuperation de biere ${req.body.bar_id}` );
     }
 
 controllerBiere.show = (req, res) => {
-    Biere.findById(req.params.bar_id) // Correction : utilisation de findById au lieu de findByID
+    Biere.findById(req.body.bar_id) // Correction : utilisation de findById au lieu de findByID
         .then((biere) => {
             if (!biere) {
                 return res.status(404).json({ message: "Bière non trouvée." });
@@ -28,39 +31,41 @@ controllerBiere.show = (req, res) => {
         });
 }
 controllerBiere.list = (req, res) => {
-    Biere.find({ bar_id: req.params.id_bar }) // Utilisation de find avec un filtre sur bar_id
-        .then((bieres) => {
-            if (!bieres || bieres.length === 0) {
-                return res.status(404).json({ message: "Aucune bière trouvée pour ce bar." });
-            }
-            res.json(bieres);
-        })
-        .catch((err) => {
-            console.error(err);
-            res.status(500).json({ message: "Une erreur est survenue lors de la récupération des bières." });
-        });
+
+    Task.updateOne({_id : req.params.id}, req.body)
+    .then((queryResult) => res.json(queryResult))
+    .catch((err) => res.send(err));
 }
 controllerBiere.store = (req, res) => {
+    // const errors = validationResult(req);
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+    const { name, description, degree, prix, b } = req.body; 
     const biere_data = {
-        nom: req.params.nom,
-        description: req.params.description,
-        degree: req.params.degree,
-        prix: req.params.prix
-    };
+        name,
+        description,
+        degree,
+        prix,
+        bar_id,
+    }
+
     Biere.create(biere_data)
         .then((result) => {
+            console.log(`Création de la bière ${result.name}`);
             res.status(201).json(result);
         })
         .catch((err) => {
             console.error(err);
             res.status(500).json({ message: "Une erreur est survenue lors de la création de la bière." });
         });
-}
+};
 controllerBiere.update = (req, res) => {
-    const biere_data = {};
-    Biere.updateOne({_id: req.params.id},biere_data)
+
+    Biere.findByIdAndUpdate(req.params.id)
         .then((result) => {
-            if (result.nModified === 0) {
+            if (result === 0) {
                 return res.status(404).json({ message: "Bière non trouvée ou aucune modification apportée." });
             }
         })
@@ -71,7 +76,7 @@ controllerBiere.update = (req, res) => {
 }
 
 controllerBiere.delete = (req, res) => {
-    Biere.findByIdAndDelete(req.params.id) // Correction : suppression de req.params
+    Biere.findByIdAndDelete(req.body.id) // Correction : suppression de req.body
         .then((result) => {
             if (!result) {
                 return res.status(404).json({ message: "Bière non trouvée." });
