@@ -109,7 +109,7 @@ package.json
 - Le prix d'une biere doit être positif
 - Le prix d'une commande doit être positif
 - Le status d'une commande doit être "en cours" ou "terminée"
-- Le status d'une commande ne peut pas être modifié si elle contient des biere
+#- Le status d'une commande ne peut pas être modifié si elle contient des biere "ne pas faire"
 - une commande ne peut pas être modifié si elle est terminée
 - La date d'une commande ne peut pas être supérieure à la date du jour
 - Quand je supprime un bars, je supprime toutes les biere et les commandes associées

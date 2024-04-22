@@ -15,7 +15,7 @@ controllerBiere.getAll = (req, res) => {
     }
 
 controllerBiere.show = (req, res) => {
-    Biere.findById(req.params.id) // Correction : utilisation de findById au lieu de findByID
+    Biere.findById(req.params.bar_id) // Correction : utilisation de findById au lieu de findByID
         .then((biere) => {
             if (!biere) {
                 return res.status(404).json({ message: "Bière non trouvée." });
@@ -27,8 +27,27 @@ controllerBiere.show = (req, res) => {
             res.status(500).json({ message: "Une erreur est survenue lors de la récupération de la bière." });
         });
 }
+controllerBiere.list = (req, res) => {
+    Biere.find({ bar_id: req.params.id_bar }) // Utilisation de find avec un filtre sur bar_id
+        .then((bieres) => {
+            if (!bieres || bieres.length === 0) {
+                return res.status(404).json({ message: "Aucune bière trouvée pour ce bar." });
+            }
+            res.json(bieres);
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).json({ message: "Une erreur est survenue lors de la récupération des bières." });
+        });
+}
 controllerBiere.store = (req, res) => {
-    Biere.create(req.body)
+    const biere_data = {
+        nom: req.params.nom,
+        description: req.params.description,
+        degree: req.params.degree,
+        prix: req.params.prix
+    };
+    Biere.create(biere_data)
         .then((result) => {
             res.status(201).json(result);
         })
@@ -38,7 +57,8 @@ controllerBiere.store = (req, res) => {
         });
 }
 controllerBiere.update = (req, res) => {
-    Biere.updateOne({_id: req.params.id}, req.body)
+    const biere_data = {};
+    Biere.updateOne({_id: req.params.id},biere_data)
         .then((result) => {
             if (result.nModified === 0) {
                 return res.status(404).json({ message: "Bière non trouvée ou aucune modification apportée." });
@@ -51,7 +71,7 @@ controllerBiere.update = (req, res) => {
 }
 
 controllerBiere.delete = (req, res) => {
-    Biere.findByIdAndDelete(req.params.id) // Correction : suppression de req.body
+    Biere.findByIdAndDelete(req.params.id) // Correction : suppression de req.params
         .then((result) => {
             if (!result) {
                 return res.status(404).json({ message: "Bière non trouvée." });

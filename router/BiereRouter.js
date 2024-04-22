@@ -3,29 +3,32 @@
  * PUT /biere/:id_biere => Modifier un biere
  . DELETE /biere/:id_biere => Supprimer un biere d'un bars
  . GET /bars/:id_bar/biere => Liste des biere d'un bars
- . GET /biere/:id_biere => Détail d'un biere*/
+ . GET /biere/:id_biere => Détail d'une biere*/
 
 const express = require('express');
 const biereRouter = express.Router();
-const { validateBiere } = require('../validators/BiereValidator'); // Assurez-vous que le chemin d'importation est correct
+const { validateBiere } = require('../validators/BiereValidator');
 const controllerBiere = require('../controllers/BiereController');
 
 // Route pour obtenir toutes les bières
-router.get('/biere', controllerBiere.getAll);
+biereRouter.get('/', controllerBiere.getAll);
 
 // Route pour obtenir une bière spécifique par son ID
-router.get('/biere/:id', controllerBiere.show);
+biereRouter.get('/:id_biere', controllerBiere.show);
+
+// Route GET pour récupérer la liste des bières d'un bar spécifique
+biereRouter.get('/:id_bar/biere', controllerBiere.list )
 
 // Route pour créer une nouvelle bière
 
-router.post('/biere', validateBiere, controllerBiere.store);
+biereRouter.post('/biere', controllerBiere.store);
 
 // Route pour mettre à jour une bière existante
 
-router.put('/biere/:id', validateBiere, controllerBiere.update);
+biereRouter.put('/:id', controllerBiere.update);
 
 // Route pour supprimer une bière
-router.delete('/biere/:id', controllerBiere.delete);
+biereRouter.delete('/:id', controllerBiere.delete);
 
 
 module.exports = biereRouter;
