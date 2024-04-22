@@ -4,9 +4,9 @@ const Bars = require('../models/Bars');
 
 
 controller.list = (req, res) => {
-    Commande.find()
-        .then((commandes) => {
-            res.json(commandes);
+    Commande.find(req.params)
+        .then((queryResult) => {
+            res.json(queryResult);
         })
         .catch((err) => {
             res.json(err);
@@ -16,8 +16,8 @@ controller.list = (req, res) => {
 
 controller.show = (req, res) => {
     Commande.findById(req.params.id)
-        .then((commande) => {
-            res.json(commande);
+        .then((queryResult) => {
+            res.json(queryResult);
         })
         .catch((err) => {
             res.json(err);
@@ -25,42 +25,28 @@ controller.show = (req, res) => {
 }
 
 controller.create = (req, res) => {
-    if (!req.body.name || !req.body.prix || !req.body.bars_id || !req.body.date || !req.body.status) {
+    if (!req.body.name || !req.body.prix || !req.params.id_bar || !req.body.date || !req.body.status) {
         return res.json('Veuillez remplir tous les champs');
     }
     const newCommande = new Commande({
         name: req.body.name,
         prix: req.body.prix,
-        bars_id: req.body.bars_id,
+        id_bar: req.params.id_bar,
         date: req.body.date,
         status: req.body.status
     });
     newCommande.save()
-        .then(() => {
-            res.json('Commande créée');
-        })
-        .catch((err) => {
-            res.json(err);
-        });
+        .then((queryResult) => res.json(queryResult))
+        .catch((err) => res.json(err))
 }
 
 controller.update = (req, res) => {
-    if (!req.body.name || !req.body.prix || !req.body.bars_id || !req.body.date || !req.body.status) {
+    /* if (!req.body.name || !req.body.prix || !req.params.id_bar || !req.body.date || !req.body.status) {
         return res.json('Veuillez remplir tous les champs');
-    }
-    Commande.findByIdAndUpdate(req.params.id, {
-        name: req.body.name,
-        prix: req.body.prix,
-        bars_id: req.body.bars_id,
-        date: req.body.date,
-        status: req.body.status
-    })
-        .then(() => {
-            res.json('Commande modifiée');
-        })
-        .catch((err) => {
-            res.json(err);
-        });
+    } */
+    Commande.findByIdAndUpdate(req.params.id_commande, req.body)
+        .then(() => res.json('commande modifiée'))
+        .catch((err) => res.json("err"));
 }
 
 controller.remove = (req, res) => {
