@@ -1,14 +1,14 @@
 const mongoose = require("mongoose")
 
 const barsSchema = mongoose.Schema({
-    id: {
+    /* _id: {
         type: Number,
-        /* required: true, */
-    },
+        required: true
+    }, A ne pas mettre car il est généré automatiquement en mongoDB */ 
 
     name: {
         type : String, 
-        unique: true,
+        /* unique: true, */
        /*  required: true, */
     },
 
