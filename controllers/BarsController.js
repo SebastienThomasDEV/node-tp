@@ -8,7 +8,7 @@ controllerBar.getAll = (req, res) => {
 };
 
 controllerBar.getBar = (req, res) => {
-    Bars.find({ id: req.params.id })
+    Bars.find({ _id: req.params.id })
         .then((queryResult) => res.json(queryResult))
         .catch((err) => res.json(err));
 };
@@ -31,15 +31,14 @@ controllerBar.generate = (req, res) => {
 }
 
 controllerBar.update = (req, res) => {
-    const bars_data = {}
 
-    Product.updateOne({ id: req.params.id }, bars_data)
+    Bars.findByIdAndUpdate(req.params.id_bar, req.body)
         .then((queryResult) => res.json(queryResult))
-        .catch((err) => res.json(err));
+        .catch((err) => res.json("err"));
 };
 
 controllerBar.remove = (req, res) => {
-    Commande.deleteOne({ id: req.params.id })
+    Bars.deleteOne({ where: { _id: req.params.id } })
         .then((queryResult) => res.json(queryResult))
         .catch((err) => res.json(err));
 }
