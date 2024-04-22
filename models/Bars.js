@@ -3,33 +3,33 @@ const mongoose = require("mongoose")
 const barsSchema = mongoose.Schema({
     id: {
         type: Number,
-        required: true,
+        /* required: true, */
     },
 
     name: {
         type : String, 
         unique: true,
-        required: true,
+       /*  required: true, */
     },
 
     adresse: {
         type: String,
-        required: true,
+       /*  required: true, */
     },
 
     tel: {
         type: String,
-        required: true,
+       /*  required: true, */
     },
 
     email: {
         type: String,
-        required: true,
+      /*   required: true, */
     },
 
     description: {
-        type: Text,
-        required: true,
+        type: String,
+       /*  required: true, */
     }
 })
 
