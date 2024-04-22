@@ -1,5 +1,5 @@
 const express = require('express');
-// const cors = require('cors');
+const biereCommandeController = require('./BiereCommandeRouter');
 const commandeController = require('../controllers/CommandeController');
 const router = express.Router();
 
@@ -9,7 +9,6 @@ router.post('/', commandeController.create);
 router.put('/:id', commandeController.update);
 router.delete('/:id', commandeController.remove);
 
-
-
+router.post('/:id', biereCommandeController);
 
 module.exports = router;
