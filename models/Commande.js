@@ -4,15 +4,15 @@ const CommandeSchema = new mongoose.Schema({
     name: {
         unique: true,
         type: String,
-        required: true
+        // required: true
     },
     prix: {
         type: Number,
-        required: true
+        // required: true
     },
     bars_id: {
         type: Number,
-        required: true
+        // required: true
     },
     date: {
         type: Date,

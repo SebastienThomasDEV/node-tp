@@ -1,5 +1,6 @@
 const controller = {};
 const Commande = require('../models/Commande');
+const Bars = require('../models/Bars');
 
 
 controller.list = (req, res) => {
@@ -72,5 +73,28 @@ controller.remove = (req, res) => {
         });
 }
 
+
+// controller.addCommandeToBars = (req, res) => {
+//     Commande.findById(req.params.id)
+//         .then((commande) => {
+//             Bars.findById(req.params.id)
+//                 .then((bars) => {
+//                     bars.commandes.push(commande);
+//                     bars.save()
+//                         .then(() => {
+//                             res.json('Commande ajoutée au bars');
+//                         })
+//                         .catch((err) => {
+//                             res.json(err);
+//                         });
+//                 })
+//                 .catch((err) => {
+//                     res.json(err);
+//                 });
+//         })
+//         .catch((err) => {
+//             res.json(err);
+//         });
+// }
 
 module.exports = controller;
