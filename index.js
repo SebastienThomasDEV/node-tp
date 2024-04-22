@@ -28,6 +28,6 @@ mongoose.connect(process.env.MONGO_URI)
         console.log("Not connected to MongoDB");
     });
 
-app.use('/commandes', CommandeRouter);
+app.use('/', CommandeRouter);
 app.use('/bars', BarsRouter);
-app.use('/biere', BiereRouter);
+app.use('/', BiereRouter);

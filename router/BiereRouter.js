@@ -7,28 +7,25 @@
 
 const express = require('express');
 const biereRouter = express.Router();
-const { validateBiere } = require('../validators/BiereValidator');
+const validate = require('../validators/BiereValidator');
 const controllerBiere = require('../controllers/BiereController');
 
-// Route pour obtenir toutes les bières
-biereRouter.get('/', controllerBiere.getAll);
+// Route GET pour récupérer la liste des bières d'un bar spécifique
+biereRouter.get('/bars/:id_bar/biere',controllerBiere.getAll);
 
 // Route pour obtenir une bière spécifique par son ID
-biereRouter.get('/:id_bar/biere', controllerBiere.show);
-
-// Route GET pour récupérer la liste des bières d'un bar spécifique
-biereRouter.get('/:id_bar/biere', controllerBiere.list )
+biereRouter.get('/biere/:id_biere', controllerBiere.show);
 
 // Route pour créer une nouvelle bière
 
-biereRouter.post('/', controllerBiere.store);
+biereRouter.post('/bars/:id_bar/biere',  controllerBiere.store);
 
 // Route pour mettre à jour une bière existante
 
-biereRouter.put('/:id', controllerBiere.update);
+biereRouter.put('/biere/:id_biere', controllerBiere.update);
 
 // Route pour supprimer une bière
-biereRouter.delete('/biere/:id', controllerBiere.delete);
+biereRouter.delete('/biere/:id_biere', controllerBiere.delete);
 
 
 module.exports = biereRouter;

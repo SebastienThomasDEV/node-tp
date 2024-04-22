@@ -30,7 +30,11 @@ const barsSchema = mongoose.Schema({
     description: {
         type: String,
        /*  required: true, */
-    }
+    },
+    bieres: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Biere'
+    }]
 })
 
 module.exports = mongoose.model("bars", barsSchema)
