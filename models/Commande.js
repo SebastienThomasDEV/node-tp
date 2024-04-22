@@ -10,8 +10,8 @@ const CommandeSchema = new mongoose.Schema({
         type: Number,
         // required: true
     },
-    bars_id: {
-        type: Number,
+    id_bar: {
+        type: String,
         // required: true
     },
     date: {
