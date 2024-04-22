@@ -14,21 +14,21 @@ const controllerBiere = require('../controllers/BiereController');
 biereRouter.get('/', controllerBiere.getAll);
 
 // Route pour obtenir une bière spécifique par son ID
-biereRouter.get('/:id_biere', controllerBiere.show);
+biereRouter.get('/:id_bar/biere', controllerBiere.show);
 
 // Route GET pour récupérer la liste des bières d'un bar spécifique
 biereRouter.get('/:id_bar/biere', controllerBiere.list )
 
 // Route pour créer une nouvelle bière
 
-biereRouter.post('/biere', controllerBiere.store);
+biereRouter.post('/', controllerBiere.store);
 
 // Route pour mettre à jour une bière existante
 
 biereRouter.put('/:id', controllerBiere.update);
 
 // Route pour supprimer une bière
-biereRouter.delete('/:id', controllerBiere.delete);
+biereRouter.delete('/biere/:id', controllerBiere.delete);
 
 
 module.exports = biereRouter;
