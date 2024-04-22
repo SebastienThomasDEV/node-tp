@@ -1,11 +1,5 @@
 const { body, param, validationResult } = require('express-validator');
-const Biere = require('../models/Biere');
 
-const validateIdParam = [
-    param('id')
-        .notEmpty()
-        .isNumeric()
-];
 
 const validateBodyParam = [
     body('date').isDate().custom((value, { req }) => {
@@ -20,4 +14,4 @@ const validateBodyParam = [
 ];
 
 
-module.exports = { validateIdParam, validateBodyParam };
+module.exports = validateBodyParam;
