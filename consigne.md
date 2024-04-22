@@ -53,8 +53,8 @@ COMMANDE :
   GET /commandes/:id => Détail d'une commande d'un bars
 
 BIERE_COMMANDE :
-  POST /commandes/:id/biere/:id => Ajouter un plat à une commande
-  DELETE /commandes/:id/biere/:id => Supprimer un plat d'une commande
+  POST /commandes/:id/biere/:id => Ajouter une bière à une commande
+  DELETE /commandes/:id/biere/:id => Supprimer une bière d'une commande
   
 // Liste des endpoints avancés
   GET /bars/:id_bar/commandes?date=2021-01-01 => Liste des commandes d'un bars à une date donnée
