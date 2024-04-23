@@ -1,8 +1,9 @@
 const { validationResult} = require('express-validator');
 const Biere = require('../models/Biere');
-const Bars = require('../models/Bars');
+const Bar = require('../models/Bar');
 const { validateBiere } = require('../validators/BiereValidator');
-const {CommandFailedEvent} = require("mongodb");
+const bieresRepository = require('../repositories/Bieres');
+
 
 const controllerBiere = {};
 // Route GET pour récupérer la liste des bières d'un bar spécifique
@@ -15,7 +16,7 @@ controllerBiere.getAll = (req, res) => {
     const { id_bar } = req.params; // Récupérer l'ID du bar depuis les paramètres d'URL
 
     // Recherche du bar par son ID
-    Bars.findById(id_bar)
+    Bar.findById(id_bar)
         .then((bar) => {
             if (!bar) {
                 return res.status(404).json({ message: "Bar non trouvé." });
@@ -48,22 +49,24 @@ controllerBiere.show = (req, res) => {
 
 
 controllerBiere.store = (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
-    }
+    // Méthode manuelle à décommenter
+    // const errors = validationResult(req);
+    // if (!errors.isEmpty()) {
+    //     return res.status(400).json({ errors: errors.array() });
+    // }
+    // const { name, description, degree, prix } = req.body;
+    // const biere_data = {
+    //     name,
+    //     description,
+    //     degree,
+    //     prix,
+    //     id_bar: req.params.id_bar,
+    // }
 
-   
-    const { name, description, degree, prix } = req.body; 
-    const biere_data = {
-        name,
-        description,
-        degree,
-        prix,
-        id_bar: req.params.id_bar, 
-    }
-
-    Biere.create(biere_data)
+    // Méthode automatique à commenter
+    const biere = bieresRepository[Math.floor(Math.random() * bieresRepository.length)];
+    biere.id_bar = req.params.id_bar; // ne pas oublier d'ajouter l'ID du bar
+    Biere.create(biere)
         .then((result) => {
             // Envoyer la réponse avec le résultat de la création
             res.status(201).json(result);
