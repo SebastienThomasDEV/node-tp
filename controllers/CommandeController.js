@@ -1,7 +1,7 @@
 const controller = {};
 const Commande = require('../models/Commande');
 const BiereCommande = require('../models/BiereCommande');
-const { faker } = require('@faker-js/faker');
+//const { faker } = require('@faker-js/faker');
 
 controller.list = (req, res) => {
     console.log(req.query.date)
