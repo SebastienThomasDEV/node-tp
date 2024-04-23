@@ -17,6 +17,10 @@ const barsSchema = mongoose.Schema({
        /*  required: true, */
     },
 
+    ville: {
+        type: String,
+    },
+
     tel: {
         type: String,
        /*  required: true, */
