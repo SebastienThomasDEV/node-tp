@@ -12,11 +12,7 @@
 
 const { body, param } = require("express-validator");
 
-const validateId = [
-  param('id')
-  .notEmpty()
-      .isNumeric()
-];
+
 
 const validateBiere = [
   body("name").isString().withMessage("Le nom d'une bière doit être renseigné"),
@@ -29,5 +25,6 @@ const validateBiere = [
   body("prix")
     .isFloat({ min: 0 })
     .withMessage("Le prix d'une bière doit être renseigné"),
-];
-module.exports = validateBiere, validateId;
+]
+
+module.exports = { validateBiere };

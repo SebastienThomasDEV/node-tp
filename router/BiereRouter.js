@@ -7,9 +7,9 @@
 
 const express = require('express');
 const biereRouter = express.Router();
-const validate = require('../validators/BiereValidator');
+const { validateBiere, }= require('../validators/BiereValidator');
 const controllerBiere = require('../controllers/BiereController');
-
+const validate = require("../validators/validator")
 // Route GET pour récupérer la liste des bières d'un bar spécifique
 biereRouter.get('/bars/:id_bar/biere',controllerBiere.getAll);
 
@@ -18,7 +18,7 @@ biereRouter.get('/biere/:id_biere', controllerBiere.show);
 
 // Route pour créer une nouvelle bière
 
-biereRouter.post('/bars/:id_bar/biere',  controllerBiere.store);
+biereRouter.post('/bars/:id_bar/biere', validate, validateBiere,  controllerBiere.store);
 
 // Route pour mettre à jour une bière existante
 
