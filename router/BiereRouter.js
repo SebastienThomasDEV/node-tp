@@ -13,21 +13,21 @@ const { validateBiere, }= require('../validators/BiereValidator');
 const controllerBiere = require('../controllers/BiereController');
 const validate = require("../validators/validator")
 // Route GET pour récupérer la liste des bières d'un bar spécifique
-biereRouter.get('/bars/:id_bar/biere',controllerBiere.getAll);
+biereRouter.get('/bars/:id_bar/bieres',controllerBiere.getAll);
 
 // Route pour obtenir une bière spécifique par son ID
-biereRouter.get('/biere/:id_biere', controllerBiere.show);
+biereRouter.get('/bieres/:id_biere', controllerBiere.show);
 
 // Route pour créer une nouvelle bière
 
-biereRouter.post('/bars/:id_bar/biere', validate, validateBiere,  controllerBiere.store);
+biereRouter.post('/bars/:id_bar/bieres', validate, validateBiere,  controllerBiere.store);
 
 // Route pour mettre à jour une bière existante
 
-biereRouter.put('/biere/:id_biere', controllerBiere.update);
+biereRouter.put('/bieres/:id_biere', controllerBiere.update);
 
 // Route pour supprimer une bière
-biereRouter.delete('/biere/:id_biere', controllerBiere.delete);
+biereRouter.delete('/bieres/:id_biere', controllerBiere.delete);
 
 biereRouter.get('/bars/:id_bar/degree', controllerBiere.degree);
 

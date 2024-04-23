@@ -1,8 +1,7 @@
 const controllerBiereCommande = {};
-const { faker } = require('@faker-js/faker');
+
 const Commande = require('../models/Commande');
 const Biere = require('../models/Biere');
-const fakerService = require("../services/FakerService");
 const BiereCommande = require('../models/BiereCommande');
 
 
@@ -11,12 +10,12 @@ controllerBiereCommande.addBiere = (req, res) => {
         return res.json('Veuillez remplir tous les champs');
     } */
     const newBiereCommande = new BiereCommande({
-        id_biere: req.body.id_biere,
-        id_commande: req.body.id_commande,
+        id_biere: req.params.id_biere,
+        id_commande: req.params.id_commande,
     });
-    newBiereCommande.save()
-        .then((queryResult) => res.json(queryResult))
-        .catch((err) => res.json(err))
+    BiereCommande.create(newBiereCommande).then((biereCommande) => {
+        res.json(biereCommande);
+    });
 }
 
 controllerBiereCommande.removeBiere = (req, res) => {

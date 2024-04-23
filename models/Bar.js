@@ -42,4 +42,4 @@ const barsSchema = mongoose.Schema({
     }]
 })
 
-module.exports = mongoose.model("bars", barsSchema)
+module.exports = mongoose.model("Bar", barsSchema)
