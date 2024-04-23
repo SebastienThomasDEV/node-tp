@@ -3,6 +3,12 @@ const Bars = require('../models/Bars');
 const { faker } = require('@faker-js/faker');
 
 controllerBar.getAll = (req, res) => {
+/*     if ({ville: req.query.ville}) {
+        Bars.find( )
+        .then(() => res.json(queryResult))
+        .catch((err) => res.json(err));
+    } else */
+    
     Bars.find()
         .then((queryResult) => res.json(queryResult))
         .catch((err) => res.json(err));
@@ -21,6 +27,7 @@ controllerBar.generate = (req, res) => {
     const bars_data = {
         name: req.body.name,
         adresse: req.body.adresse,
+        ville: req.body.ville,
         tel: req.body.tel,
         email: req.body.email,
         description: req.body.description
