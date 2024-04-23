@@ -1,7 +1,7 @@
 const controllerBar = {};
 const Bars = require('../models/Bars');
-const { faker } = require('@faker-js/faker');
 const { $where } = require('../models/Commande');
+const fakerService = require('../services/FakerService');
 
 controllerBar.getAll = (req, res) => {
     if (req.query.ville) {
@@ -27,22 +27,22 @@ controllerBar.getBar = (req, res) => {
 };
 
 controllerBar.generate = (req, res) => {
-    /*    if (!req.body.name || !req.body.adresse || !req.body.tel || !req.body.email || !req.body.description) {
-           return res.json('Veuillez remplir tous les champs');
-       } */
-    const bars_data = {
-        name: req.body.name,
-        adresse: req.body.adresse,
-        ville: req.body.ville,
-        tel: req.body.tel,
-        email: req.body.email,
-        description: req.body.description
-    }
+ /*    if (!req.body.name || !req.body.adresse || !req.body.tel || !req.body.email || !req.body.description) {
+        return res.json('Veuillez remplir tous les champs');
+    } */
+    const bar = fakerService.generateFakeBar();
+    // const bar = {
+    //     name: req.body.name,
+    //     adresse: req.body.adresse,
+    //     tel: req.body.tel,
+    //     email: req.body.email,
+    //     description: req.body.description
+    // }
 
-    Bars.create(bars_data)
+    Bars.create(bar)
         .then((queryResult) => res.json(queryResult))
         .catch((err) => res.json(err));
-}
+};
 
 controllerBar.update = (req, res) => {
 
