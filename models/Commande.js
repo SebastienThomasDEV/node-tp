@@ -24,7 +24,7 @@ const CommandeSchema = new mongoose.Schema({
         enum: ['en cours', 'terminée'],
         default: 'en cours'
     },
-    biere_id: {
+    id_biere: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'biere',
         // required: true

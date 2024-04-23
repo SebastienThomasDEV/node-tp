@@ -27,13 +27,13 @@ const biereSchema = new mongoose.Schema({
     min: 0,
   },
  // Référence au modèle Bar
-  bar_id: {
+  id_bar: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Bar",
 
   },
   // Référence au modèle Commande
-  commande_id: {
+  id_commande: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Commande',
     // required: true
