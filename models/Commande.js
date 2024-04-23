@@ -8,6 +8,7 @@ const CommandeSchema = new mongoose.Schema({
     },
     prix: {
         type: Number,
+        min: 0
         // required: true
     },
     id_bar: {
@@ -23,7 +24,6 @@ const CommandeSchema = new mongoose.Schema({
         enum: ['en cours', 'terminée'],
         default: 'en cours'
     }
-
 });
 
 module.exports = mongoose.model('commande', CommandeSchema);

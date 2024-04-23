@@ -1,5 +1,6 @@
 const controllerBar = {};
 const Bars = require('../models/Bars');
+const { faker } = require('@faker-js/faker');
 
 controllerBar.getAll = (req, res) => {
     Bars.find()

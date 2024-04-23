@@ -1,20 +1,28 @@
 const controller = {};
 const Commande = require('../models/Commande');
-const Bars = require('../models/Bars');
-
+const BiereCommande = require('../models/BiereCommande');
+const { faker } = require('@faker-js/faker');
 
 controller.list = (req, res) => {
-    Commande.find(req.params)
-        .then((queryResult) => {
+    console.log(req.query.date)
+    if (req.query.date) {
+        Commande.find({date: req.query.date}).then((queryResult) => {
             res.json(queryResult);
-        })
-        .catch((err) => {
+        }).catch((err) => {
             res.json(err);
         });
-
+        if (req.query.prix_min && req.query.prix_max) {
+            Commande.find({prix: {$gte: req.query.prix_min, $lte: req.query.prix_max}}).then((queryResult) => {
+                res.json(queryResult);
+            }).catch((err) => {
+                res.json(err);
+            });
+        }
+    }
 }
 
 controller.show = (req, res) => {
+    console.log(req)
     Commande.findById(req.params.id)
         .then((queryResult) => {
             res.json(queryResult);
@@ -44,43 +52,30 @@ controller.update = (req, res) => {
     /* if (!req.body.name || !req.body.prix || !req.params.id_bar || !req.body.date || !req.body.status) {
         return res.json('Veuillez remplir tous les champs');
     } */
-    Commande.findByIdAndUpdate(req.params.id_commande, req.body)
-        .then(() => res.json('commande modifiée'))
-        .catch((err) => res.json("err"));
+    Commande.find({_id: req.params.id}).then((commande) => {
+        if (commande.length === 0) {
+            return res.json('Commande non trouvée');
+        }
+        if (commande.status === 'terminée') {
+            return res.json('Commande terminée, impossible de la modifier');
+        }
+    }).then(() => {
+        Commande.findByIdAndUpdate(req.params.id_commande, req.body)
+            .then(() => res.json('commande modifiée'))
+            .catch((err) => res.json(err));
+    }).catch((err) => res.json(err));
 }
 
 controller.remove = (req, res) => {
-    Commande.findOneAndDelete(req.params.id)
-        .then(() => {
-            res.json('Commande supprimée');
+    Commande.findById(req.params.id)
+        .then((commande) => {
+            if (!commande) {
+                return res.json('Commande non trouvée');
+            }
+            BiereCommande.deleteMany({id_commande: req.params.id}).then(() => {
+                res.json('Commande supprimée');
+            })
         })
-        .catch((err) => {
-            res.json(err);
-        });
 }
-
-
-// controller.addCommandeToBars = (req, res) => {
-//     Commande.findById(req.params.id)
-//         .then((commande) => {
-//             Bars.findById(req.params.id)
-//                 .then((bars) => {
-//                     bars.commandes.push(commande);
-//                     bars.save()
-//                         .then(() => {
-//                             res.json('Commande ajoutée au bars');
-//                         })
-//                         .catch((err) => {
-//                             res.json(err);
-//                         });
-//                 })
-//                 .catch((err) => {
-//                     res.json(err);
-//                 });
-//         })
-//         .catch((err) => {
-//             res.json(err);
-//         });
-// }
 
 module.exports = controller;

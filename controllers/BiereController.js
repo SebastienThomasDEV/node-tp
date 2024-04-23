@@ -1,7 +1,7 @@
 const { validationResult } = require('express-validator');
 const Biere = require('../models/Biere');
 const Bars = require('../models/Bars');
-
+const { faker } = require('@faker-js/faker');
 
 const controllerBiere = {};
 
