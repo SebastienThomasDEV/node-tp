@@ -2,7 +2,7 @@ const { validationResult} = require('express-validator');
 const Biere = require('../models/Biere');
 const Bars = require('../models/Bars');
 const { validateBiere } = require('../validators/BiereValidator');
-const { faker } = require('@faker-js/faker');
+const {CommandFailedEvent} = require("mongodb");
 
 const controllerBiere = {};
 // Route GET pour récupérer la liste des bières d'un bar spécifique
