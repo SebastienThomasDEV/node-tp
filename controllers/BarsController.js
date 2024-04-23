@@ -1,17 +1,23 @@
 const controllerBar = {};
 const Bars = require('../models/Bars');
 const { faker } = require('@faker-js/faker');
+const { $where } = require('../models/Commande');
 
 controllerBar.getAll = (req, res) => {
-/*     if ({ville: req.query.ville}) {
-        Bars.find( )
-        .then(() => res.json(queryResult))
-        .catch((err) => res.json(err));
-    } else */
-    
-    Bars.find()
+    if (req.query.ville) {
+        Bars.find({ ville: req.query.ville })
+            .then((queryResult) => res.json(queryResult))
+            .catch((err) => res.json(err));
+    } 
+    if (req.query.name) {
+        Bars.find({ name: {$regex: req.query.name }})
         .then((queryResult) => res.json(queryResult))
         .catch((err) => res.json(err));
+    } else
+
+        Bars.find()
+            .then((queryResult) => res.json(queryResult))
+            .catch((err) => res.json(err));
 };
 
 controllerBar.getBar = (req, res) => {
@@ -21,9 +27,9 @@ controllerBar.getBar = (req, res) => {
 };
 
 controllerBar.generate = (req, res) => {
- /*    if (!req.body.name || !req.body.adresse || !req.body.tel || !req.body.email || !req.body.description) {
-        return res.json('Veuillez remplir tous les champs');
-    } */
+    /*    if (!req.body.name || !req.body.adresse || !req.body.tel || !req.body.email || !req.body.description) {
+           return res.json('Veuillez remplir tous les champs');
+       } */
     const bars_data = {
         name: req.body.name,
         adresse: req.body.adresse,
