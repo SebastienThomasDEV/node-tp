@@ -22,7 +22,7 @@ controllerBiere.getAll = (req, res) => {
             }
 
             // Recherche des bières associées à ce bar
-            return Biere.find({ bar_id: id_bar });
+            return Biere.find({ id_bar: id_bar });
         })
         .then((bieres) => {
             res.status(200).json(bieres);
@@ -33,7 +33,7 @@ controllerBiere.getAll = (req, res) => {
         });
 };
 controllerBiere.show = (req, res) => {
-    Biere.findById(req.body.bar_id) // Correction : utilisation de findById au lieu de findByID
+    Biere.findById(req.body.id_bar) // Correction : utilisation de findById au lieu de findByID
         .then((biere) => {
             if (!biere) {
                 return res.status(404).json({ message: "Bière non trouvée." });
@@ -60,7 +60,7 @@ controllerBiere.store = (req, res) => {
         description,
         degree,
         prix,
-        bar_id: req.params.id_bar, 
+        id_bar: req.params.id_bar, 
     }
 
     Biere.create(biere_data)
@@ -84,7 +84,7 @@ controllerBiere.update = (req, res) => {
 controllerBiere.delete = (req, res) => {
 const biereID = req.params.id_biere
 //suprimer toute les commandes qui contiennent cette bière
-Biere.deleteMany({biere_id: biereID})
+Biere.deleteMany({id_biere: biereID})
     .then(() => {
         //suprimer la bière une fois que la commande est suprimer
         Biere.findByIdAndDelete(biereID)
