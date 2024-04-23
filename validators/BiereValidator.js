@@ -12,6 +12,8 @@
 
 const { body, param } = require("express-validator");
 
+
+
 const validateBiere = [
   body("name").isString().withMessage("Le nom d'une bière doit être renseigné"),
   body("description")
@@ -23,5 +25,6 @@ const validateBiere = [
   body("prix")
     .isFloat({ min: 0 })
     .withMessage("Le prix d'une bière doit être renseigné"),
-];
-module.exports = validateBiere;
+]
+
+module.exports = { validateBiere };

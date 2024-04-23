@@ -42,8 +42,13 @@ BIERE :
   POST /bars/:id_bar/biere => Ajouter un bière à un bars
   PUT /biere/:id_biere => Modifier une bière
   DELETE /biere/:id_biere => Supprimer un bière d'un bars
+
+  POST /bars/:id_bar/biere => Ajouter un biere à un bars
+  PUT /biere/:id_biere => Modifier un biere
+  DELETE /biere/:id_biere => Supprimer un biere d'un bars
   GET /bars/:id_bar/biere => Liste des biere d'un bars
   GET /biere/:id_biere => Détail d'un bière
+  GET /biere/:id_biere => Détail d'un biere
 
 COMMANDE :
   POST /bars/:id_bar/commandes => Ajouter une commande à un bars
@@ -107,15 +112,15 @@ package.json
 - Tous les champs obligatoires doivent être renseignés
 - Le nom d'un bars doit être unique
 - Le prix d'une biere doit être positif
-- Le prix d'une commande doit être positif
-- Le status d'une commande doit être "en cours" ou "terminée"
+- Le prix d'une commande doit être positif (✔️)
+- Le status d'une commande doit être "en cours" ou "terminée" (✔️)
 #- Le status d'une commande ne peut pas être modifié si elle contient des biere "ne pas faire"
-- une commande ne peut pas être modifié si elle est terminée
+- une commande ne peut pas être modifié si elle est terminée (✔️)
 - La date d'une commande ne peut pas être supérieure à la date du jour
 - Quand je supprime un bars, je supprime toutes les biere et les commandes associées
 - Quand je supprime une biere, je supprime toutes les commandes associées
-- Quand je supprime une commande, je supprime toutes les biere_commande associées
-
+- Quand je supprime une commande, je supprime toutes les biere_commande associées (✔️)
+  
 // BONUS
 
 GET /bars/:id_bar/degree?prix_min=10&prix_max=20 => Degré d'alcool moyen des bières d'un bars avec un prix compris entre 10 et 20
