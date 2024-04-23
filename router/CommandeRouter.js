@@ -3,12 +3,12 @@ const biereCommandeController = require('./BiereCommandeRouter');
 const commandeController = require('../controllers/CommandeController');
 const router = express.Router();
 
-router.get('/', commandeController.list);
-router.get('/:id', commandeController.show);
-router.post('/', commandeController.create);
-router.put('/:id', commandeController.update);
-router.delete('/:id', commandeController.remove);
+router.get('/bars/:id_bar/commandes', commandeController.list);
+router.get('/commandes/:id', commandeController.show);
+router.post('/bars/:id_bar/commandes', commandeController.create);
+router.put('/commandes/:id_commande', commandeController.update);
+router.delete('/commandes/:id_commande', commandeController.remove);
 
-router.post('/:id', biereCommandeController);
+router.post('/:id_bar', biereCommandeController);
 
 module.exports = router;

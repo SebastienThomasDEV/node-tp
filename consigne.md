@@ -20,7 +20,7 @@ Biere
 
 
 Biere_Commande (table de liaison)
-  plat_id:
+  biere_id:
   commande_id:
 
 Commande 
@@ -39,11 +39,11 @@ BARS :
   GET /bars/:id_bar => Détail d'un bars
 
 BIERE : 
-  POST /bars/:id_bar/biere => Ajouter un plat à un bars
-  PUT /biere/:id_biere => Modifier un plat
-  DELETE /biere/:id_biere => Supprimer un plat d'un bars
+  POST /bars/:id_bar/biere => Ajouter un bière à un bars
+  PUT /biere/:id_biere => Modifier une bière
+  DELETE /biere/:id_biere => Supprimer un bière d'un bars
   GET /bars/:id_bar/biere => Liste des biere d'un bars
-  GET /biere/:id_biere => Détail d'un plat
+  GET /biere/:id_biere => Détail d'un bière
 
 COMMANDE :
   POST /bars/:id_bar/commandes => Ajouter une commande à un bars
