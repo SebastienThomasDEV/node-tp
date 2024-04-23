@@ -9,7 +9,7 @@ const validateBodyParam = [
         return true;
     }),
     body('status').isIn(['en cours', 'terminée']),
-    body('bars_id').isNumeric(),
+    body('id_bars').isNumeric(),
     body('prix').isNumeric().isFloat({ min: 0 }),
 ];
 
