@@ -73,24 +73,16 @@ controllerBiere.store = (req, res) => {
 };
 controllerBiere.update = (req, res) => {
 
-    Biere.updateOne({ _id: req.params.id_biere }, req.body)
+    Biere.findByIdAndUpdate(req.params.id_biere , req.body)
 
         .then((queryResult) => res.json(queryResult))
-        .catch((err) => res.json("err", err));
+        .catch((err) => res.json("err"));
 };
 
 controllerBiere.delete = (req, res) => {
-    Biere.findByIdAndDelete(req.body.id_biere) 
+    Biere.findByIdAndDelete(req.params.id_biere, req.body) 
 
-        .then((result) => {
-            if (!result) {
-                return res.status(404).json({ message: "Bière non trouvée." });
-            }
-            
-        })
-        .catch((err) => {
-            console.error(err);
-            res.status(500).json({ message: "Une erreur est survenue lors de la suppression de la bière." });
-        });
+    .then((queryResult) => res.json(queryResult))
+    .catch((err) => res.json("err"));
     };
 module.exports = controllerBiere;
