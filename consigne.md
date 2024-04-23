@@ -42,8 +42,13 @@ BIERE :
   POST /bars/:id_bar/biere => Ajouter un bière à un bars
   PUT /biere/:id_biere => Modifier une bière
   DELETE /biere/:id_biere => Supprimer un bière d'un bars
+
+  POST /bars/:id_bar/biere => Ajouter un biere à un bars
+  PUT /biere/:id_biere => Modifier un biere
+  DELETE /biere/:id_biere => Supprimer un biere d'un bars
   GET /bars/:id_bar/biere => Liste des biere d'un bars
   GET /biere/:id_biere => Détail d'un bière
+  GET /biere/:id_biere => Détail d'un biere
 
 COMMANDE :
   POST /bars/:id_bar/commandes => Ajouter une commande à un bars
