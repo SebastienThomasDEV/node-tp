@@ -1,12 +1,12 @@
 const controller = {};
 const Commande = require('../models/Commande');
 const BiereCommande = require('../models/BiereCommande');
-const fakerService = require('../services/FakerService');
+const commandesRepository = require('../repositories/Commandes');
+
 
 
 
 controller.list = (req, res) => {
-    console.log(req.query.date)
     if (req.query.date) {
         Commande.find({date: req.query.date}).then((queryResult) => {
             res.json(queryResult);
@@ -21,6 +21,11 @@ controller.list = (req, res) => {
             res.json(err);
         });
     }
+    Commande.find().then((queryResult) => {
+        res.json(queryResult);
+    }).catch((err) => {
+        res.json(err);
+    });
 }
 
 controller.show = (req, res) => {
@@ -41,13 +46,7 @@ controller.create = (req, res) => {
     //     return res.json('Veuillez remplir tous les champs');
     // }
 
-    const fakerCommande = fakerService.generateFakeCommande();
-
-    Commande.create(fakerCommande).then((queryResult) => {
-        res.json(queryResult);
-    }).catch((err) => {
-        res.json(err);
-    });
+    // Méthode manuelle à décommenter
     // const newCommande = new Commande({
     //     name: req.body.name,
     //     prix: req.body.prix,
@@ -55,9 +54,13 @@ controller.create = (req, res) => {
     //     date: req.body.date,
     //     status: req.body.status
     // });
-    // newCommande.save()
-    //     .then((queryResult) => res.json(queryResult))
-    //     .catch((err) => res.json(err))
+
+    // Méthode automatique à commenter
+    const newCommande = commandesRepository[Math.floor(Math.random() * commandesRepository.length)];
+    newCommande.id_bar = req.params.id_bar;
+    Commande.create(newCommande)
+        .then((queryResult) => res.json(queryResult))
+        .catch((err) => res.json(err))
 }
 
 controller.update = (req, res) => {

@@ -26,9 +26,9 @@ const CommandeSchema = new mongoose.Schema({
     },
     id_biere: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'biere',
+        ref: 'Biere',
         // required: true
     },
 });
 
-module.exports = mongoose.model('commande', CommandeSchema);
+module.exports = mongoose.model('Commande', CommandeSchema);

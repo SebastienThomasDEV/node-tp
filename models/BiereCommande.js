@@ -2,13 +2,15 @@ const mongoose = require('mongoose');
 
 const BiereCommandeSchema = new mongoose.Schema({
     id_biere: {
-        type: String
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Biere"
         // required: true
     },
     id_commande: {
-        type: String
+        type: mongoose.Schema.Types.ObjectId,
+        ref : 'Commande'
         // required: true
     },
 });
 
-module.exports = mongoose.model('biereCommande', BiereCommandeSchema);
+module.exports = mongoose.model('BiereCommande', BiereCommandeSchema);

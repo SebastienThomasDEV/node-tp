@@ -7,7 +7,7 @@ require('dotenv').config();
 
 // routers
 
-const BarsRouter = require("./router/BarsRouter");
+const BarsRouter = require("./router/BarRouter");
 const BiereRouter = require("./router/BiereRouter");
 const CommandeRouter = require("./router/CommandeRouter");
 const BiereCommande = require("./router/BiereCommandeRouter");
