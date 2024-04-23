@@ -23,7 +23,12 @@ const CommandeSchema = new mongoose.Schema({
         type: String,
         enum: ['en cours', 'terminée'],
         default: 'en cours'
-    }
+    },
+    biere_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'biere',
+        // required: true
+    },
 });
 
 module.exports = mongoose.model('commande', CommandeSchema);

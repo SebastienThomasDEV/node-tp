@@ -32,6 +32,12 @@ const biereSchema = new mongoose.Schema({
     ref: "Bar",
 
   },
+  // Référence au modèle Commande
+  commande_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Commande',
+    // required: true
+},
 });
 
 module.exports = mongoose.model("Biere", biereSchema); // Utilisation de 'Biere' pour le nom du modèle
