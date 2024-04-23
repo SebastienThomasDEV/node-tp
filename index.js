@@ -10,6 +10,8 @@ require('dotenv').config();
 const BarsRouter = require("./router/BarsRouter");
 const BiereRouter = require("./router/BiereRouter");
 const CommandeRouter = require("./router/CommandeRouter");
+const BiereCommande = require("./router/BiereCommandeRouter");
+const BiereCommandeRouter = require('./router/BiereCommandeRouter');
 
 // const cors = require('cors');
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -31,3 +33,4 @@ mongoose.connect(process.env.MONGO_URI)
 app.use('/', CommandeRouter);
 app.use('/bars', BarsRouter);
 app.use('/', BiereRouter);
+app.use('/', BiereCommandeRouter)

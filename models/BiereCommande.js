@@ -1,14 +1,12 @@
 const mongoose = require('mongoose');
 
 const BiereCommandeSchema = new mongoose.Schema({
-    biere_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Biere',
+    id_biere: {
+        type: String
         // required: true
     },
-    commande_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Commande',
+    id_commande: {
+        type: String
         // required: true
     },
 });

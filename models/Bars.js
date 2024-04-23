@@ -35,6 +35,7 @@ const barsSchema = mongoose.Schema({
         type: String,
        /*  required: true, */
     },
+    
     bieres: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Biere'
