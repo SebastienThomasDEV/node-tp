@@ -3,7 +3,9 @@
  * PUT /biere/:id_biere => Modifier un biere
  . DELETE /biere/:id_biere => Supprimer un biere d'un bars
  . GET /bars/:id_bar/biere => Liste des biere d'un bars
- . GET /biere/:id_biere => Détail d'une biere*/
+ . GET /biere/:id_biere => Détail d'une biere
+ GET /bars/:id_bar/degree => Degré d'alcool moyen des bières d'un bars
+ */
 
 const express = require('express');
 const biereRouter = express.Router();
@@ -27,5 +29,6 @@ biereRouter.put('/biere/:id_biere', controllerBiere.update);
 // Route pour supprimer une bière
 biereRouter.delete('/biere/:id_biere', controllerBiere.delete);
 
+biereRouter.get('/bars/:id_bar/degree', controllerBiere.degree);
 
 module.exports = biereRouter;
