@@ -1,7 +1,9 @@
 const controller = {};
 const Commande = require('../models/Commande');
 const BiereCommande = require('../models/BiereCommande');
-//const { faker } = require('@faker-js/faker');
+const fakerService = require('../services/FakerService');
+
+
 
 controller.list = (req, res) => {
     console.log(req.query.date)
@@ -11,20 +13,22 @@ controller.list = (req, res) => {
         }).catch((err) => {
             res.json(err);
         });
-        if (req.query.prix_min && req.query.prix_max) {
-            Commande.find({prix: {$gte: req.query.prix_min, $lte: req.query.prix_max}}).then((queryResult) => {
-                res.json(queryResult);
-            }).catch((err) => {
-                res.json(err);
-            });
-        }
+    }
+    if (req.query.prix_min && req.query.prix_max) {
+        Commande.find({prix: {$gte: req.query.prix_min, $lte: req.query.prix_max}}).then((queryResult) => {
+            res.json(queryResult);
+        }).catch((err) => {
+            res.json(err);
+        });
     }
 }
 
 controller.show = (req, res) => {
-    console.log(req)
     Commande.findById(req.params.id)
         .then((queryResult) => {
+            if (!queryResult) {
+                return res.json('Commande non trouvée');
+            }
             res.json(queryResult);
         })
         .catch((err) => {
@@ -33,19 +37,27 @@ controller.show = (req, res) => {
 }
 
 controller.create = (req, res) => {
-    if (!req.body.name || !req.body.prix || !req.params.id_bar || !req.body.date || !req.body.status) {
-        return res.json('Veuillez remplir tous les champs');
-    }
-    const newCommande = new Commande({
-        name: req.body.name,
-        prix: req.body.prix,
-        id_bar: req.params.id_bar,
-        date: req.body.date,
-        status: req.body.status
+    // if (!req.body.name || !req.body.prix || !req.params.id_bar || !req.body.date || !req.body.status) {
+    //     return res.json('Veuillez remplir tous les champs');
+    // }
+
+    const fakerCommande = fakerService.generateFakeCommande();
+
+    Commande.create(fakerCommande).then((queryResult) => {
+        res.json(queryResult);
+    }).catch((err) => {
+        res.json(err);
     });
-    newCommande.save()
-        .then((queryResult) => res.json(queryResult))
-        .catch((err) => res.json(err))
+    // const newCommande = new Commande({
+    //     name: req.body.name,
+    //     prix: req.body.prix,
+    //     id_bar: req.params.id_bar,
+    //     date: req.body.date,
+    //     status: req.body.status
+    // });
+    // newCommande.save()
+    //     .then((queryResult) => res.json(queryResult))
+    //     .catch((err) => res.json(err))
 }
 
 controller.update = (req, res) => {
