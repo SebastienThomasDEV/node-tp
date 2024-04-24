@@ -35,7 +35,7 @@ const biereSchema = new mongoose.Schema({
   // Référence au modèle Commande
   id_commande: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Commande',
+    ref: 'Commandes',
     // required: true
 },
 });

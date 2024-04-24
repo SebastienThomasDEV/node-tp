@@ -2,9 +2,11 @@ const controllerBar = {};
 const Bar = require('../models/Bar');
 const { $where } = require('../models/Commande');
 const barsRepository = require('../repositories/Bars');
+const Biere = require("../repositories/Bieres")
 
 
 controllerBar.getAll = (req, res) => {
+
     if (req.query.ville) {
         Bar.find({ ville: req.query.ville })
             .then((queryResult) => res.json(queryResult))
@@ -14,12 +16,13 @@ controllerBar.getAll = (req, res) => {
         Bar.find({ name: { $regex: req.query.name } })
             .then((queryResult) => res.json(queryResult))
             .catch((err) => res.json(err));
-    } else
+    }
 
-        Bar.find()
-            .then((queryResult) => res.json(queryResult))
-            .catch((err) => res.json(err));
-};
+    Bar.find()
+        .then((queryResult) => res.json(queryResult))
+        .catch((err) => res.json(err));
+}
+
 
 controllerBar.getBar = (req, res) => {
     Bar.find({ _id: req.params.id_bar })
@@ -63,16 +66,6 @@ controllerBar.remove = (req, res) => {
 // Bonus 
 
 // ligne 126
-controllerBar.sort = (req, res) => {
-    let sortDir = 1; 
-    if (req.query.sort === "desc") {
-        sortDir = -1;
-    }
-    Bar.find()
-        .sort({ name: sortDir})
-        .then((queryResult) => res.json(queryResult))
-        .catch((err) => res.json(err));
-}
 
 
 
