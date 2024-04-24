@@ -4,7 +4,7 @@ const Bar = require('../models/Bar');
 const { validateBiere } = require('../validators/BiereValidator');
 const bieresRepository = require('../repositories/Bieres');
 const mongoose = require('mongoose');
-const BiereCommande = require('../models/Commande');
+
 
 const controllerBiere = {};
 // Route GET pour récupérer la liste des bières d'un bar spécifique
@@ -98,30 +98,17 @@ controllerBiere.update = (req, res) => {
 };
 
 controllerBiere.delete = (req, res) => {
-    const biereID = req.params.id_biere
-    const  comandesBiere = req.params.id_commande;
-    //suprimer toute les commandes qui contiennent cette bière
-     // Tout d'abord, supprimez toutes les commandes associées à la bière
-     BiereCommande.deleteMany({  comandesBiere })
-     .then(() => {
-         // Après avoir supprimé les commandes, supprimez la bière elle-même
-         return Biere.findByIdAndDelete(biereID);
-     })
-     .then((deleteBiere) => {
-         if (!deleteBiere) {
-             return res.status(404).json({ message: "Biere non trouvée." });
-         }
-         res.status(200).json({ message: "Biere suprimee." });
-     })
-     .catch((err) => {
-         console.log(`err`);
-         res.status(500).json({ message: "Une erreur est survenue lors de la suppression de la bière." });
-     });
-     console.log(`C`);
 
-console.log(`commande deleted: ${commande}`);
-
-    };
+        Biere.findById(req.params.id_biere)
+        .then((biere) => {
+            if (!biere) {
+                return res.json('Bière non trouvée');
+            }
+            Biere.deleteMany({id_biere: req.params.id_biere}).then(() => {
+                res.json('bière supprimée');
+            })
+        })
+};
     //GET /bars/:id_bar/degree => Degré d'alcool moyen des bières d'un bars
     controllerBiere.degree = (req, res) => {
         const { id_bar } = req.params;
