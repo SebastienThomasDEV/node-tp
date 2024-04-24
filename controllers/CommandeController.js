@@ -2,30 +2,23 @@ const controller = {};
 const Commande = require('../models/Commande');
 const BiereCommande = require('../models/BiereCommande');
 const commandesRepository = require('../repositories/Commandes');
+const FilterService = require('../services/FilterService');
 
 
 
 
-controller.list = (req, res) => {
-    if (req.query.date) {
-        Commande.find({date: req.query.date}).then((queryResult) => {
+controller.list = async (req, res) => {
+    if (Object.keys(req.query).length > 0) {
+        await FilterService.filterCommandes(req.query).then((queryResult) => {
             res.json(queryResult);
         }).catch((err) => {
             res.json(err);
         });
+    } else {
+        await Commande.find()
+            .then((queryResult) => res.json(queryResult))
+            .catch((err) => res.json(err));
     }
-    if (req.query.prix_min && req.query.prix_max) {
-        Commande.find({prix: {$gte: req.query.prix_min, $lte: req.query.prix_max}}).then((queryResult) => {
-            res.json(queryResult);
-        }).catch((err) => {
-            res.json(err);
-        });
-    }
-    Commande.find().then((queryResult) => {
-        res.json(queryResult);
-    }).catch((err) => {
-        res.json(err);
-    });
 }
 
 controller.show = (req, res) => {
