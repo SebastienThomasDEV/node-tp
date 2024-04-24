@@ -14,7 +14,7 @@ controllerBiere.getAll = (req, res) => {
     }
 
     const { id_bar } = req.params; // Récupérer l'ID du bar depuis les paramètres d'URL
-    console.log(id_bar);
+    
     // Recherche du bar par son ID
     Bar.findById(id_bar)
         .then((bar) => {
@@ -23,8 +23,20 @@ controllerBiere.getAll = (req, res) => {
             }
             
             // Recherche des bières associées à ce bar
+            
+            // Bonus : fonction tri
+            if (req.query.sort) {
+                let sortDir = 1;
+                if (req.query.sort === "desc") {
+                    sortDir = -1;
+                }
+                
+                return Biere.find()
+                    .sort({ name: sortDir })
+            };
             return Biere.find({ id_bar: id_bar });
-        })
+        }) // fin bonus
+        
         .then((bieres) => {
             res.status(200).json(bieres);
         })
@@ -32,7 +44,9 @@ controllerBiere.getAll = (req, res) => {
             console.error(err);
             res.status(500).json({ message: "Une erreur est survenue lors de la récupération des bières du bar." });
         });
+
 };
+
 controllerBiere.show = (req, res) => {
     Biere.findById(req.body.id_bar) // Correction : utilisation de findById au lieu de findByID
         .then((biere) => {
