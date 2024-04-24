@@ -9,7 +9,7 @@
 
 const express = require('express');
 const biereRouter = express.Router();
-const { validateBiere, }= require('../validators/BiereValidator');
+const { validateBiere }= require('../validators/BiereValidator');
 const controllerBiere = require('../controllers/BiereController');
 const validate = require("../validators/validator")
 // Route GET pour récupérer la liste des bières d'un bar spécifique
