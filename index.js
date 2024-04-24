@@ -7,7 +7,7 @@ require('dotenv').config();
 
 // routers
 
-const BarsRouter = require("./router/BarRouter");
+const BarRouter = require("./router/BarRouter");
 const BiereRouter = require("./router/BiereRouter");
 const CommandeRouter = require("./router/CommandeRouter");
 const BiereCommande = require("./router/BiereCommandeRouter");
@@ -31,6 +31,6 @@ mongoose.connect(process.env.MONGO_URI)
     });
 
 app.use('/', CommandeRouter);
-app.use('/bars', BarsRouter);
+app.use('/bars', BarRouter);
 app.use('/', BiereRouter);
 app.use('/', BiereCommandeRouter)

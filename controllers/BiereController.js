@@ -1,4 +1,4 @@
-const { validationResult} = require('express-validator');
+const { validationResult } = require('express-validator');
 const Biere = require('../models/Biere');
 const Bar = require('../models/Bar');
 const { validateBiere } = require('../validators/BiereValidator');
@@ -14,14 +14,14 @@ controllerBiere.getAll = (req, res) => {
     }
 
     const { id_bar } = req.params; // Récupérer l'ID du bar depuis les paramètres d'URL
-
+    console.log(id_bar);
     // Recherche du bar par son ID
     Bar.findById(id_bar)
         .then((bar) => {
             if (!bar) {
                 return res.status(404).json({ message: "Bar non trouvé." });
             }
-
+            
             // Recherche des bières associées à ce bar
             return Biere.find({ id_bar: id_bar });
         })
@@ -78,43 +78,43 @@ controllerBiere.store = (req, res) => {
 };
 controllerBiere.update = (req, res) => {
 
-    Biere.findByIdAndUpdate(req.params.id_biere , req.body)
+    Biere.findByIdAndUpdate(req.params.id_biere, req.body)
 
         .then((queryResult) => res.json(queryResult))
         .catch((err) => res.json("err"));
 };
 
 controllerBiere.delete = (req, res) => {
-const biereID = req.params.id_biere
-//suprimer toute les commandes qui contiennent cette bière
-Biere.deleteMany({id_biere: biereID})
-    .then(() => {
-        //suprimer la bière une fois que la commande est suprimer
-        Biere.findByIdAndDelete(biereID)
-        .then((deleteBiere) => {
-            if (!deleteBiere) {
-                return res.status(404).json({ message: "Biere non trouvée." });
-            }
-            res.status(200).json({ message: "Biere suprimee." });
+    const biereID = req.params.id_biere
+    //suprimer toute les commandes qui contiennent cette bière
+    Biere.deleteMany({ id_biere: biereID })
+        .then(() => {
+            //suprimer la bière une fois que la commande est suprimer
+            Biere.findByIdAndDelete(biereID)
+                .then((deleteBiere) => {
+                    if (!deleteBiere) {
+                        return res.status(404).json({ message: "Biere non trouvée." });
+                    }
+                    res.status(200).json({ message: "Biere suprimee." });
+                })
+                .catch((err) => {
+                    console.log(`err`);
+                    res.status(500).json({ message: "Une erreur est survenue lors de la suppression de la bière." });
+                });
         })
         .catch((err) => {
             console.log(`err`);
             res.status(500).json({ message: "Une erreur est survenue lors de la suppression de la bière." });
         });
-    })
-    .catch((err) => {
-        console.log(`err`);
-        res.status(500).json({ message: "Une erreur est survenue lors de la suppression de la bière." });
-    });
-    };
-    //GET /bars/:id_bar/degree => Degré d'alcool moyen des bières d'un bars
-    controllerBiere.degree = (req, res) => {
-        const { id_bar } = req.params;
+};
+//GET /bars/:id_bar/degree => Degré d'alcool moyen des bières d'un bars
+controllerBiere.degree = (req, res) => {
+    const { id_bar } = req.params;
 
-        Biere.aggregate([
-            { $match: { bar_id: id_bar } }, // Filtrer les bières du bar spécifique
-            { $group: { _id: null, avgDegree: { $avg: "$degree" } } } // Calculer la moyenne du degré d'alcool
-        ])
+    Biere.aggregate([
+        { $match: { bar_id: id_bar } }, // Filtrer les bières du bar spécifique
+        { $group: { _id: null, avgDegree: { $avg: "$degree" } } } // Calculer la moyenne du degré d'alcool
+    ])
         .then((result) => {
             if (result.length > 0) {
                 res.json({ averageDegree: result[0].avgDegree });
@@ -126,5 +126,5 @@ Biere.deleteMany({id_biere: biereID})
             console.error(err);
             res.status(500).json({ message: "Une erreur est survenue lors du calcul du degré moyen." });
         });
-    };
+};
 module.exports = controllerBiere;
