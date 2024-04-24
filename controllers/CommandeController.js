@@ -3,8 +3,8 @@ const Commande = require('../models/Commande');
 const BiereCommande = require('../models/BiereCommande');
 const commandesRepository = require('../repositories/Commandes');
 const FilterService = require('../services/FilterService');
-
-
+const Utils = require('../utils/Utils');
+const fs = require("fs");
 
 
 controller.list = async (req, res) => {
@@ -84,6 +84,22 @@ controller.remove = (req, res) => {
                 res.json('Commande supprimée');
             })
         })
+}
+
+controller.details = (req, res) => {
+    Commande.findById(req.params.id_commande)
+        .then((commande) => {
+            Utils.generatePdf(commande).then(() => {
+                res.setHeader('Content-Type', 'application/pdf');
+                fs.createReadStream(`./public/${commande._id}-${commande.id_bar}.pdf`).pipe(res);
+
+            }).catch((err) => {
+                res.json(err);
+            });
+        })
+        .catch((err) => {
+            res.status(500).json(err);
+        });
 }
 
 module.exports = controller;
