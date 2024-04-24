@@ -9,11 +9,11 @@ controllerBar.getAll = (req, res) => {
         Bar.find({ ville: req.query.ville })
             .then((queryResult) => res.json(queryResult))
             .catch((err) => res.json(err));
-    } 
+    }
     if (req.query.name) {
-        Bar.find({ name: {$regex: req.query.name }})
-        .then((queryResult) => res.json(queryResult))
-        .catch((err) => res.json(err));
+        Bar.find({ name: { $regex: req.query.name } })
+            .then((queryResult) => res.json(queryResult))
+            .catch((err) => res.json(err));
     } else
 
         Bar.find()
@@ -59,6 +59,24 @@ controllerBar.remove = (req, res) => {
         .then((queryResult) => res.json(queryResult))
         .catch((err) => res.json(err));
 }
+
+// Bonus 
+
+// ligne 126
+controllerBar.sort = (req, res) => {
+    let sortDir = 1; 
+    if (req.query.sort === "desc") {
+        sortDir = -1;
+    }
+    Bar.find()
+        .sort({ name: sortDir})
+        .then((queryResult) => res.json(queryResult))
+        .catch((err) => res.json(err));
+}
+
+
+
+
 module.exports = controllerBar;
 
 
