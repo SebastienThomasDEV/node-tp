@@ -23,18 +23,6 @@ controllerBar.getAll = (req, res) => {
         .catch((err) => res.json(err));
 }
 
-/* // Bonus
-    if (req.query.sort) {
-        let sortDir = 1;
-        if (req.query.sort === "desc") {
-            sortDir = -1;
-        }
-        Bar.find()
-            .sort({ name: sortDir })
-            .then((queryResult) => res.json(queryResult))
-            .catch((err) => res.json(err));
-    }; */
-
 
 controllerBar.getBar = (req, res) => {
     Bar.find({ _id: req.params.id_bar })
