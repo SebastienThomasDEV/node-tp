@@ -113,10 +113,7 @@ controllerBiere.delete = (req, res) => {
         });
 
     })
-    .catch((err) => {
-        console.log(`err`);
-        res.status(500).json({ message: "Une erreur est survenue lors de la suppression de la bière." });
-    });
+
     };
     //GET /bars/:id_bar/degree => Degré d'alcool moyen des bières d'un bars
     controllerBiere.degree = (req, res) => {
