@@ -3,7 +3,7 @@ const Biere = require('../models/Biere');
 const Bar = require('../models/Bar');
 const { validateBiere } = require('../validators/BiereValidator');
 const bieresRepository = require('../repositories/Bieres');
-
+const mongoose = require('mongoose');
 
 const controllerBiere = {};
 // Route GET pour récupérer la liste des bières d'un bar spécifique
@@ -14,7 +14,6 @@ controllerBiere.getAll = (req, res) => {
     }
 
     const { id_bar } = req.params; // Récupérer l'ID du bar depuis les paramètres d'URL
-    
     // Recherche du bar par son ID
     Bar.findById(id_bar)
         .then((bar) => {
@@ -44,7 +43,6 @@ controllerBiere.getAll = (req, res) => {
             console.error(err);
             res.status(500).json({ message: "Une erreur est survenue lors de la récupération des bières du bar." });
         });
-
 };
 
 controllerBiere.show = (req, res) => {
@@ -120,23 +118,27 @@ controllerBiere.delete = (req, res) => {
             console.log(`err`);
             res.status(500).json({ message: "Une erreur est survenue lors de la suppression de la bière." });
         });
-};
-//GET /bars/:id_bar/degree => Degré d'alcool moyen des bières d'un bars
-controllerBiere.degree = (req, res) => {
-    const { id_bar } = req.params;
 
-    Biere.aggregate([
-        { $match: { bar_id: id_bar } }, // Filtrer les bières du bar spécifique
-        { $group: { _id: null, avgDegree: { $avg: "$degree" } } } // Calculer la moyenne du degré d'alcool
-    ])
-        .then((result) => {
+    })
+
+    };
+    //GET /bars/:id_bar/degree => Degré d'alcool moyen des bières d'un bars
+    controllerBiere.degree = (req, res) => {
+        const { id_bar } = req.params;
+    
+        Biere.aggregate([
+            { $match: { id_bar: new mongoose.Types.ObjectId(id_bar) } }, // Correctly use new keyword
+            { $group: { _id: null, avgDegree: { $avg: "$degree" } } } // Calculate the average degree
+        ])
+        .then(result => {
+
             if (result.length > 0) {
                 res.json({ averageDegree: result[0].avgDegree });
             } else {
                 res.status(404).json({ message: "Aucune bière trouvée pour ce bar." });
             }
         })
-        .catch((err) => {
+        .catch(err => {
             console.error(err);
             res.status(500).json({ message: "Une erreur est survenue lors du calcul du degré moyen." });
         });
