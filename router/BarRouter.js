@@ -10,4 +10,10 @@ BarRouter.post("/", validate, validateBodyParam, validateBar, controllerBar.gene
 BarRouter.put("/:id_bar", validate, validateBodyParam, validateBar, controllerBar.update)
 BarRouter.delete("/:id_bar", controllerBar.remove)
 
+// Bonus
+
+BarRouter.get("/:id_bar/bieres", controllerBar.sort)
+
+
+
 module.exports = BarRouter;
