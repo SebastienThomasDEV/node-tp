@@ -1,3 +1,4 @@
+
 const {validationResult} = require('express-validator');
 const Biere = require('../models/Biere');
 const Bar = require('../models/Bar');
@@ -54,21 +55,20 @@ controllerBiere.show = (req, res) => {
         }).catch((err) => ErrorService.handle(err, res));
 }
 
-
 controllerBiere.store = (req, res) => {
-    // Méthode manuelle à décommenter
-    // const errors = validationResult(req);
-    // if (!errors.isEmpty()) {
-    //     return res.status(400).json({ errors: errors.array() });
-    // }
-    // const { name, description, degree, prix } = req.body;
-    // const biere_data = {
-    //     name,
-    //     description,
-    //     degree,
-    //     prix,
-    //     id_bar: req.params.id_bar,
-    // }
+  // Méthode manuelle à décommenter
+  // const errors = validationResult(req);
+  // if (!errors.isEmpty()) {
+  //     return res.status(400).json({ errors: errors.array() });
+  // }
+  // const { name, description, degree, prix } = req.body;
+  // const biere_data = {
+  //     name,
+  //     description,
+  //     degree,
+  //     prix,
+  //     id_bar: req.params.id_bar,
+  // }
 
     // Méthode automatique à commenter
     const biere = bieresRepository[Math.floor(Math.random() * bieresRepository.length)];
