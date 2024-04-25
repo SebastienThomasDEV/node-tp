@@ -35,7 +35,7 @@ controllerBiere.getAll = (req, res) => {
                 return Biere.find()
                     .sort({name: sortDir})
             }
-            return Biere.find({id_bar: id_bar});
+            return Biere.find({id_bar: id_bar}).catch((err) => ErrorService.handle(err, res));
         }) // fin bonus
 
         .then((bieres) => {
