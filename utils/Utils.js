@@ -19,6 +19,7 @@ const Utils = {
             (bar) => {
                 // on crée le document PDF
                 const doc = new PDFDocument();
+                console.log(bar);
                 // on applique les styles et on ajoute les données
                 doc.fontSize(25).text('Commande', 100, 100);
                 doc.fontSize(15).text(`Nom: ${commande.name}`);
