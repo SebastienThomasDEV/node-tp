@@ -3,7 +3,7 @@ const controllerBiereCommande = {};
 const Commande = require('../models/Commande');
 const Biere = require('../models/Biere');
 const BiereCommande = require('../models/BiereCommande');
-
+const ErrorService = require('../services/ErrorService');
 
 controllerBiereCommande.addBiere = (req, res) => {
     /* if (!req.body.name || !req.body.prix || !req.params.id_bar || !req.body.date || !req.body.status) {
@@ -15,7 +15,7 @@ controllerBiereCommande.addBiere = (req, res) => {
     });
     BiereCommande.create(newBiereCommande).then((biereCommande) => {
         res.json(biereCommande);
-    });
+    }).catch((err) => ErrorService.handle(err, res));
 }
 
 controllerBiereCommande.removeBiere = (req, res) => {
@@ -26,8 +26,8 @@ controllerBiereCommande.removeBiere = (req, res) => {
         }
         BiereCommande.deleteMany({id_biere: req.params.id_biere}).then(() => {
             res.json('Commande supprimée');
-        })
-    })
+        }).catch((err) => ErrorService.handle(err, res));
+    }).catch((err) => ErrorService.handle(err, res));
 }
 
 module.exports = controllerBiereCommande;

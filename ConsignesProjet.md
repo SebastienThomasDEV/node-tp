@@ -32,36 +32,36 @@ status : string (en cours, terminée)
 
 // Liste des endpoints
 BARS : 
-  POST /bars => Ajouter un bars
-  PUT /bars/:id_bar => Modifier un bars
-  DELETE /bars/:id_bar => Supprimer un bars
-  GET /bars => Liste des bars
-  GET /bars/:id_bar => Détail d'un bars
+  /!\ TERMINEE /!\ POST /bars => Ajouter un bars
+  /!\ TERMINEE /!\ PUT /bars/:id_bar => Modifier un bars
+  /!\ TERMINEE /!\ DELETE /bars/:id_bar => Supprimer un bars
+  /!\ TERMINEE /!\ GET /bars => Liste des bars
+  /!\ TERMINEE /!\ GET /bars/:id_bar => Détail d'un bars
 
 BIERE : 
-  POST /bars/:id_bar/biere => Ajouter un plat à un bars
-  PUT /biere/:id_biere => Modifier un plat
-  DELETE /biere/:id_biere => Supprimer un plat d'un bars
-  GET /bars/:id_bar/biere => Liste des biere d'un bars
-  GET /biere/:id_biere => Détail d'un plat
+  /!\ TERMINEE /!\ POST /bars/:id_bar/biere => Ajouter un plat à un bars
+  /!\ TERMINEE /!\ PUT /biere/:id_biere => Modifier un plat
+  /!\ TERMINEE /!\ DELETE /biere/:id_biere => Supprimer un plat d'un bars
+  /!\ TERMINEE /!\ GET /bars/:id_bar/biere => Liste des biere d'un bars
+  /!\ TERMINEE /!\ GET /biere/:id_biere => Détail d'un plat
 
 COMMANDE :
-  POST /bars/:id_bar/commandes => Ajouter une commande à un bars
-  PUT /commandes/:id_commande => Modifier une commande d'un bars
-  DELETE /commandes/:id_commande => Supprimer une commande d'un bars
-  GET /bars/:id_bar/commandes => Liste des commandes d'un bars
-  GET /commandes/:id => Détail d'une commande d'un bars
+  /!\ TERMINEE /!\ POST /bars/:id_bar/commandes => Ajouter une commande à un bars
+  /!\ TERMINEE /!\ PUT /commandes/:id_commande => Modifier une commande d'un bars
+  /!\ TERMINEE /!\ DELETE /commandes/:id_commande => Supprimer une commande d'un bars
+  /!\ TERMINEE /!\ GET /bars/:id_bar/commandes => Liste des commandes d'un bars
+  /!\ TERMINEE /!\ GET /commandes/:id => Détail d'une commande d'un bars
 
 BIERE_COMMANDE :
-  POST /commandes/:id/biere/:id => Ajouter un plat à une commande
-  DELETE /commandes/:id/biere/:id => Supprimer un plat d'une commande
+  /!\ TERMINEE /!\ POST /commandes/:id/biere/:id => Ajouter un plat à une commande
+  /!\ TERMINEE /!\ DELETE /commandes/:id/biere/:id => Supprimer un plat d'une commande
   
 // Liste des endpoints avancés
-  GET /bars/:id_bar/commandes?date=2021-01-01 => Liste des commandes d'un bars à une date donnée
-  GET /bars/:id_bar/commandes?prix_min=10&prix_max=20 => Liste des commandes d'un bars avec un prix compris entre 10 et 20
-  GET /bars?ville=Paris => Liste des bars d'une ville donnée
-  GET /bars?name=example => Liste des bars dont le nom contient "example"
-  GET /bars/:id_bar/degree => Degré d'alcool moyen des bières d'un bars
+ /!\ TERMINEE /!\ GET /bars/:id_bar/commandes?date=2021-01-01 => Liste des commandes d'un bars à une date donnée
+ /!\ TERMINEE /!\ GET /bars/:id_bar/commandes?prix_min=10&prix_max=20 => Liste des commandes d'un bars avec un prix compris entre 10 et 20
+ /!\ TERMINEE /!\ GET /bars?ville=Paris => Liste des bars d'une ville donnée
+ /!\ TERMINEE /!\ GET /bars?name=example => Liste des bars dont le nom contient "example"
+ /!\ TERMINEE /!\ GET /bars/:id_bar/degree => Degré d'alcool moyen des bières d'un bars
 
 // Liste des fichiers recommandés
 - models/
@@ -120,10 +120,10 @@ package.json
 
 GET /bars/:id_bar/degree?prix_min=10&prix_max=20 => Degré d'alcool moyen des bières d'un bars avec un prix compris entre 10 et 20
 GET /bars/:id_bar/degree?date=2021-01-01 => Degré d'alcool moyen des bières des commandes d'un bars à une date donnée
-GET /bars/:id_bar/commandes?date=2021-01-01&prix_min=10&prix_max=20 => Liste des commandes d'un bars à une date donnée avec un prix compris entre 10 et 20
-GET /bars/:id_bar/commandes?date=2021-01-01&prix_min=10&prix_max=20&status=terminée => Liste des commandes d'un bars à une date donnée avec un prix compris entre 10 et 20 et terminée
-GET /bars/:id_bar/commandes?date=2021-01-01&prix_min=10&prix_max=20&status=terminée&name=example => Liste des commandes d'un bars à une date donnée avec un prix compris entre 10 et 20 et terminée et dont le nom contient "example"
-GET /commande/details/:id_commande => renvoie un pdf de la commande 
+/!\ TERMINEE /!\ GET /bars/:id_bar/commandes?date=2021-01-01&prix_min=10&prix_max=20 => Liste des commandes d'un bars à une date donnée avec un prix compris entre 10 et 20
+/!\ TERMINEE /!\ GET /bars/:id_bar/commandes?date=2021-01-01&prix_min=10&prix_max=20&status=terminée => Liste des commandes d'un bars à une date donnée avec un prix compris entre 10 et 20 et terminée
+/!\ TERMINEE /!\ GET /bars/:id_bar/commandes?date=2021-01-01&prix_min=10&prix_max=20&status=terminée&name=example => Liste des commandes d'un bars à une date donnée avec un prix compris entre 10 et 20 et terminée et dont le nom contient "example"
+/!\ TERMINEE /!\ GET /commande/details/:id_commande => renvoie un pdf de la commande 
 GET /bars/:id_bar/biere?sort=asc => Liste des biere d'un bars triées par ordre alphabétique
 GET /bars/:id_bar/biere?sort=desc => Liste des biere d'un bars triées par ordre alphabétique inversé
 GET /bars/:id_bar/biere?sort=asc&limit=10 => Liste des biere d'un bars triées par ordre alphabétique et limitées à 10
