@@ -78,8 +78,7 @@ controllerBiere.store = (req, res) => {
             res.status(201).json(result);
         })
         .catch((err) => ErrorService.handle(err, res));
-    });
-};
+}
 
 
 controllerBiere.delete = (req, res) => {
