@@ -102,23 +102,17 @@ controllerBar.remove = (req, res) => {
                     return biereModel.deleteMany({ id_bar: req.params.id_bar });
                 })
                 .then(() => {
-                    // Suppression des bières commandées associées au bar
+                    // Suppression des bières_commandes associées au bar
                     return biereCommandeModel.deleteMany({ id_bar: req.params.id_bar });
                 })
                 .then(() => {
-                    // Répondre une fois toutes les suppressions terminées
+                    // Message une fois toutes les actions faites
                     res.json("Bar supprimé");
                 })
                 .catch((err) => res.json(err));
         })
         .catch((err) => res.json(err));
 }
-
-// Bonus 
-
-// ligne 126
-
-
 
 
 module.exports = controllerBar;
