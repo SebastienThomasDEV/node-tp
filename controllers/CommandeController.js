@@ -56,7 +56,7 @@ controller.update = (req, res) => {
     /* if (!req.body.name || !req.body.prix || !req.params.id_bar || !req.body.date || !req.body.status) {
         return res.json('Veuillez remplir tous les champs');
     } */
-    Commande.find({_id: req.params.id_commande}).then((commande) => {
+    Commande.find({ _id: req.params.id_commande }).then((commande) => {
         if (commande.length === 0) {
             return res.json('Commande non trouvée');
         }
@@ -71,15 +71,29 @@ controller.update = (req, res) => {
 }
 
 controller.remove = (req, res) => {
-    Commande.findById(req.params.id_commande)
+
+    // suppression des commandes via leur id
+    Commande.findByIdAndDelete(req.params.id_commande)
         .then((commande) => {
             if (!commande) {
                 return res.json('Commande non trouvée');
             }
-            BiereCommande.deleteMany({id_commande: req.params.id_commande}).then(() => {
-                res.json('Commande supprimée');
-            }).catch((err) => ErrorService.handle(err, res));
-        }).catch((err) => ErrorService.handle(err, res));
+
+
+            //suppression des bieres_commandes associées à cette commande via l'id
+            BiereCommande.deleteMany({ id_commande: req.params.id_commande })
+
+                .then(() => {
+                    return BiereCommande.deleteMany({ id_commande: req.params.id_commande })
+                })
+
+                .then(() => {
+                    res.json('Commande supprimée');
+                })
+                .catch((err) => res.json(err));
+        })
+        .catch((err) => res.json(err));
+
 }
 
 controller.details = (req, res) => {

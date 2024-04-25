@@ -5,6 +5,14 @@ const Biere = require('../models/Biere');
 const BiereCommande = require('../models/BiereCommande');
 const ErrorService = require('../services/ErrorService');
 
+
+controllerBiereCommande.getBico = (req, res) => {
+    BiereCommande.find()
+        .then((queryResult) => res.json(queryResult))
+        .catch((err) => res.json(err));
+
+}
+
 controllerBiereCommande.addBiere = (req, res) => {
     /* if (!req.body.name || !req.body.prix || !req.params.id_bar || !req.body.date || !req.body.status) {
         return res.json('Veuillez remplir tous les champs');
@@ -20,6 +28,7 @@ controllerBiereCommande.addBiere = (req, res) => {
 
 controllerBiereCommande.removeBiere = (req, res) => {
     BiereCommande.findById(req.params.id_commande)
+
     .then((biereCommande) => {
         if (!biereCommande) {
             return res.json('Commande non trouvée');
@@ -28,6 +37,7 @@ controllerBiereCommande.removeBiere = (req, res) => {
             res.json('Commande supprimée');
         }).catch((err) => ErrorService.handle(err, res));
     }).catch((err) => ErrorService.handle(err, res));
+
 }
 
 module.exports = controllerBiereCommande;
