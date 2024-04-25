@@ -3,7 +3,7 @@ const controllerBiereCommande = {};
 const Commande = require('../models/Commande');
 const Biere = require('../models/Biere');
 const BiereCommande = require('../models/BiereCommande');
-
+const ErrorService = require('../services/ErrorService');
 
 
 controllerBiereCommande.getBico = (req, res) => {
@@ -23,19 +23,21 @@ controllerBiereCommande.addBiere = (req, res) => {
     });
     BiereCommande.create(newBiereCommande).then((biereCommande) => {
         res.json(biereCommande);
-    });
+    }).catch((err) => ErrorService.handle(err, res));
 }
 
 controllerBiereCommande.removeBiere = (req, res) => {
     BiereCommande.findById(req.params.id_commande)
-        .then((biereCommande) => {
-            if (!biereCommande) {
-                return res.json('Commande non trouvée');
-            }
-            BiereCommande.deleteMany({ id_biere: req.params.id_biere }).then(() => {
-                res.json('Commande supprimée');
-            })
-        })
+
+    .then((biereCommande) => {
+        if (!biereCommande) {
+            return res.json('Commande non trouvée');
+        }
+        BiereCommande.deleteMany({id_biere: req.params.id_biere}).then(() => {
+            res.json('Commande supprimée');
+        }).catch((err) => ErrorService.handle(err, res));
+    }).catch((err) => ErrorService.handle(err, res));
+
 }
 
 module.exports = controllerBiereCommande;

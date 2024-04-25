@@ -4,20 +4,18 @@ const BiereCommande = require('../models/BiereCommande');
 const commandesRepository = require('../repositories/Commandes');
 const FilterService = require('../services/FilterService');
 const Utils = require('../utils/Utils');
-const fs = require("fs");
+const ErrorService = require('../services/ErrorService');
 
 
 controller.list = async (req, res) => {
     if (Object.keys(req.query).length > 0) {
         await FilterService.filterCommandes(req.query).then((queryResult) => {
             res.json(queryResult);
-        }).catch((err) => {
-            res.json(err);
-        });
+        }).catch((err) => ErrorService.handle(err, res));
     } else {
         await Commande.find()
             .then((queryResult) => res.json(queryResult))
-            .catch((err) => res.json(err));
+            .catch((err) => ErrorService.handle(err, res));
     }
 }
 
@@ -29,9 +27,7 @@ controller.show = (req, res) => {
             }
             res.json(queryResult);
         })
-        .catch((err) => {
-            res.json(err);
-        });
+        .catch((err) => ErrorService.handle(err, res));
 }
 
 controller.create = (req, res) => {
@@ -53,7 +49,7 @@ controller.create = (req, res) => {
     newCommande.id_bar = req.params.id_bar;
     Commande.create(newCommande)
         .then((queryResult) => res.json(queryResult))
-        .catch((err) => res.json(err))
+        .catch((err) => ErrorService.handle(err, res));
 }
 
 controller.update = (req, res) => {
@@ -70,8 +66,8 @@ controller.update = (req, res) => {
     }).then(() => {
         Commande.findByIdAndUpdate(req.params.id_commande, req.body)
             .then(() => res.json('commande modifiée'))
-            .catch((err) => res.json(err));
-    }).catch((err) => res.json(err));
+            .catch((err) => ErrorService.handle(err, res));
+    }).catch((err) => ErrorService.handle(err, res));
 }
 
 controller.remove = (req, res) => {
@@ -82,6 +78,7 @@ controller.remove = (req, res) => {
             if (!commande) {
                 return res.json('Commande non trouvée');
             }
+
 
             //suppression des bieres_commandes associées à cette commande via l'id
             BiereCommande.deleteMany({ id_commande: req.params.id_commande })
@@ -96,6 +93,7 @@ controller.remove = (req, res) => {
                 .catch((err) => res.json(err));
         })
         .catch((err) => res.json(err));
+
 }
 
 controller.details = (req, res) => {
@@ -103,9 +101,7 @@ controller.details = (req, res) => {
         .then((commande) => {
             Utils.generatePdfAndSend(commande, res);
         })
-        .catch((err) => {
-            res.status(500).json(err);
-        });
+        .catch((err) => ErrorService.handle(err, res));
 }
 
 module.exports = controller;
