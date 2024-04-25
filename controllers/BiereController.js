@@ -159,14 +159,17 @@ controllerBiere.bonus = (req, res) => {
       if (!bar) {
         return res.status(404).json({ message: "Bar non trouvé." });
       }
-
+console.log(`id_bar: ${id_bar}`);
       // Si 'sort' est défini et convertissez-le en un nombre si nécessaire
       const { sort, limit, offset, degree_min, degree_max } = req.query;
       const query = {
         id_bar: new mongoose.Types.ObjectId(id_bar),
         degree: { $gte: degree_min, $lte: degree_max },
       };
+      console.log(`id_bar: ${id_bar}`);
       console.log(`query: ${query}`);
+      console.log(`degree_min: ${degree_min}`);
+      console.log(`degree_max: ${degree_max}`);
 
       // Utilisez 'sort' pour déterminer l'ordre de tri
       // Si 'sort' est 'asc', l'ordre de tri est croissant (1)
@@ -179,8 +182,10 @@ controllerBiere.bonus = (req, res) => {
         .skip(parseInt(offset))
         .then((bieres) => {
           res.json(bieres);
+          console.log(`sortOrder: ${sortOrder}`);
           console.log(`bieres found: ${bieres}`);
         })
+  
         .catch((err) => {
           console.error(err);
           res.status(500).json({
