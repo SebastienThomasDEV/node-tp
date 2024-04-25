@@ -13,6 +13,9 @@ const filterService = {
         if (filtres.status) {
             filters_list.push({status: {$regex: filtres.status}});
         }
+        if (filtres.name) {
+            filters_list.push({name: {$regex: filtres.name}});
+        }
         return Commande.find({$and: filters_list});
     },
     filterBiere : async (filtres) => {

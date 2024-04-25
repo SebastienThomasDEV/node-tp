@@ -8,15 +8,8 @@ const { faker } = require('@faker-js/faker');
 
 const fakerService = {
 
-    generateFakeBar: () => {
-        return new Bar({
-            name: faker.company.name(),
-            adresse: faker.location.streetAddress(),
-            tel: faker.phone.number(),
-            ville: faker.location.city(),
-            email: faker.internet.email(),
-            description: faker.company.catchPhrase()
-        });
+    generateFakeBarData: () => {
+
     },
 
 
