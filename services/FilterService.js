@@ -19,7 +19,15 @@ const filterService = {
         return Commande.find({$and: filters_list});
     },
     filterBiere : async (filtres) => {
-        // code ici
+        let filters_list = [];
+        if (filtres.alcool_min && filtres.alcool_max) {
+            filters_list.push({alcool: {$gte: filtres.alcool_min, $lte: filtres.alcool_max}});
+        }
+        if (filtres.name) {
+            filters_list.push({name: {$regex: filtres.name}});
+        }
+        return Biere.find({$and: filters_list});    
+
     }
 }
 
