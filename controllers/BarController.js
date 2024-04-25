@@ -1,8 +1,9 @@
 const controllerBar = {};
 const Bar = require('../models/Bar');
-const { $where } = require('../models/Commande');
+const Commande = require('../models/Commande');
 const barsRepository = require('../repositories/Bars');
-const Biere = require("../repositories/Bieres")
+const biereModel = require("../models/Biere")
+const biereCommandeModel = require("../models/BiereCommande")
 
 
 controllerBar.getAll = (req, res) => {
@@ -57,9 +58,28 @@ controllerBar.update = (req, res) => {
         .catch((err) => res.json("err"));
 };
 
+
 controllerBar.remove = (req, res) => {
-    Bar.findByIdAndDelete(req.params.id_bar, req.body)
-        .then((queryResult) => res.json(queryResult))
+
+    Bar.findByIdAndDelete(req.params.id_bar)
+        .then(() => {
+
+            // suppression des commandés dont l'id_bar est spécifié dans l'URL
+            Commande.deleteMany({ id_bar: req.params.id_bar })
+            biereModel.find({ id_bar: req.params.id_bar })
+                .then((bieres) => {
+                    bieres.forEach((biere) => { // biere est un objet = chaque biere récupérée dans la table bieres
+                        const biereID = biere._id
+                        biereCommandeModel.deleteMany({ biereID })
+                    })
+
+                    biereModel.deleteMany({ id_bar: req.params.id_bar })
+                    .then(console.log("tatitoaitfnvb qejdkrhf"))
+
+
+                })
+                .then(() => res.json("Bar supprimé"))
+        })
         .catch((err) => res.json(err));
 }
 
