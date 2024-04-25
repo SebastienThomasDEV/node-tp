@@ -23,7 +23,9 @@ const Utils = {
                 doc.fontSize(25).text('Commande', 100, 100);
                 doc.fontSize(15).text(`Nom: ${commande.name}`);
                 doc.fontSize(15).text(`Prix: ${commande.prix}`);
-                doc.fontSize(15).text(`Bar: ${bar.name}`);
+                if (bar) {
+                    doc.fontSize(15).text(`Bar: ${bar.name}`);
+                }
                 doc.fontSize(15).text(`Date: ${date}`);
                 doc.fontSize(15).text(`Status: ${commande.status}`);
                 // on termine le document pour qu'il soit prêt à être envoyé

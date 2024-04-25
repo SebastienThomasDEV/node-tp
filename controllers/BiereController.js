@@ -4,7 +4,8 @@ const Bar = require("../models/Bar");
 const { validateBiere } = require("../validators/BiereValidator");
 const bieresRepository = require("../repositories/Bieres");
 const mongoose = require("mongoose");
-
+const { filterBiere } = require("../services/FilterService");
+const BiereCommande = require("../models/BiereCommande");
 const controllerBiere = {};
 // Route GET pour récupérer la liste des bières d'un bar spécifique
 controllerBiere.getAll = (req, res) => {
@@ -105,8 +106,9 @@ controllerBiere.delete = (req, res) => {
   const comandesBiere = req.params.id_commande;
   //suprimer toute les commandes qui contiennent cette bière
   // Tout d'abord, supprimez toutes les commandes associées à la bière
-  BiereCommande.deleteMany({ comandesBiere })
+  BiereCommande.deleteMany({ id_commande: comandesBiere })
     .then(() => {
+      console.log(`commande deleted: ${id_commande}`);
       // Après avoir supprimé les commandes, supprimez la bière elle-même
       return Biere.findByIdAndDelete(biereID);
     })
@@ -122,9 +124,8 @@ controllerBiere.delete = (req, res) => {
         message: "Une erreur est survenue lors de la suppression de la bière.",
       });
     });
-  console.log(`C`);
 
-  console.log(`commande deleted: ${commande}`);
+
 };
 
 //GET /bars/:id_bar/degree => Degré d'alcool moyen des bières d'un bars
@@ -159,14 +160,17 @@ controllerBiere.bonus = (req, res) => {
       if (!bar) {
         return res.status(404).json({ message: "Bar non trouvé." });
       }
-
+console.log(`id_bar: ${id_bar}`);
       // Si 'sort' est défini et convertissez-le en un nombre si nécessaire
       const { sort, limit, offset, degree_min, degree_max } = req.query;
       const query = {
         id_bar: new mongoose.Types.ObjectId(id_bar),
-        degree: { $gte: degree_min, $lte: degree_max },
+        degree: {
+          $gte: parseFloat(degree_min),
+          $lte: parseFloat(degree_max),
+        },
       };
-      console.log(`query: ${query}`);
+
 
       // Utilisez 'sort' pour déterminer l'ordre de tri
       // Si 'sort' est 'asc', l'ordre de tri est croissant (1)
@@ -179,8 +183,10 @@ controllerBiere.bonus = (req, res) => {
         .skip(parseInt(offset))
         .then((bieres) => {
           res.json(bieres);
+          console.log(`sortOrder: ${sortOrder}`);
           console.log(`bieres found: ${bieres}`);
         })
+  
         .catch((err) => {
           console.error(err);
           res.status(500).json({
