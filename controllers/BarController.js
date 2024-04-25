@@ -1,9 +1,10 @@
 const controllerBar = {};
 const Bar = require('../models/Bar');
-const Commande = require('../models/Commande');
+const commandeModel = require('../models/Commande');
 const barsRepository = require('../repositories/Bars');
 const biereModel = require("../models/Biere")
-const biereCommandeModel = require("../models/BiereCommande")
+const biereCommandeModel = require("../models/BiereCommande");
+const { query } = require('express-validator');
 
 
 controllerBar.getAll = (req, res) => {
@@ -59,13 +60,23 @@ controllerBar.update = (req, res) => {
 };
 
 
-controllerBar.remove = (req, res) => {
+/* controllerBar.remove = (req, res) => {
 
     Bar.findByIdAndDelete(req.params.id_bar)
         .then(() => {
 
             // suppression des commandés dont l'id_bar est spécifié dans l'URL
-            Commande.deleteMany({ id_bar: req.params.id_bar })
+            commandeModel.find({ id_bar: req.params.id_bar })
+                .then((commandes) => {
+                    commandes.forEach((commande) => {
+                        const CommandeID = commande._id
+                        commandeModel.deleteMany({ CommandeID })
+
+                    })
+                    commandeModel.deleteMany({ id_bar: req.params.id_bar })
+                })
+                
+
             biereModel.find({ id_bar: req.params.id_bar })
                 .then((bieres) => {
                     bieres.forEach((biere) => { // biere est un objet = chaque biere récupérée dans la table bieres
@@ -74,11 +85,31 @@ controllerBar.remove = (req, res) => {
                     })
 
                     biereModel.deleteMany({ id_bar: req.params.id_bar })
-                    .then(console.log("tatitoaitfnvb qejdkrhf"))
-
-
+                        
                 })
                 .then(() => res.json("Bar supprimé"))
+        })
+        .catch((err) => res.json(err));
+} */
+
+controllerBar.remove = (req, res) => {
+    Bar.findByIdAndDelete(req.params.id_bar)
+        .then(() => {
+            // Suppression des commandes associées au bar
+            commandeModel.deleteMany({ id_bar: req.params.id_bar })
+                .then(() => {
+                    // Suppression des bières associées au bar
+                    return biereModel.deleteMany({ id_bar: req.params.id_bar });
+                })
+                .then(() => {
+                    // Suppression des bières commandées associées au bar
+                    return biereCommandeModel.deleteMany({ id_bar: req.params.id_bar });
+                })
+                .then(() => {
+                    // Répondre une fois toutes les suppressions terminées
+                    res.json("Bar supprimé");
+                })
+                .catch((err) => res.json(err));
         })
         .catch((err) => res.json(err));
 }
