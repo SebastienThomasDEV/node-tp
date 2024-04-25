@@ -103,30 +103,22 @@ controllerBiere.update = (req, res) => {
 };
 controllerBiere.delete = (req, res) => {
   const biereID = req.params.id_biere;
-  const comandesBiere = req.params.id_commande;
-  //suprimer toute les commandes qui contiennent cette bière
-  // Tout d'abord, supprimez toutes les commandes associées à la bière
-  BiereCommande.deleteMany({ id_commande: comandesBiere })
-    .then(() => {
-      console.log(`commande deleted: ${id_commande}`);
-      // Après avoir supprimé les commandes, supprimez la bière elle-même
-      return Biere.findByIdAndDelete(biereID);
-    })
-    .then((deleteBiere) => {
-      if (!deleteBiere) {
-        return res.status(404).json({ message: "Biere non trouvée." });
-      }
-      res.status(200).json({ message: "Biere suprimee." });
-    })
-    .catch((err) => {
-      console.log(`err`);
-      res.status(500).json({
-        message: "Une erreur est survenue lors de la suppression de la bière.",
-      });
-    });
+  
+  Biere.findByIdAndDelete(req.params.id_biere)
+  .then(() => {
+      // Suppression des commandes associées à la biere
+      BiereCommande.deleteMany({ id_biere: biereID })
+          .then(() => {
+              // Répondre une fois toutes les suppressions terminées
+              res.json("commande et bière supprimées");
+          })
+          .catch((err) => res.json(err));
+  })
+  .catch((err) => res.json(err));;
 
 
 };
+
 
 //GET /bars/:id_bar/degree => Degré d'alcool moyen des bières d'un bars
 controllerBiere.degree = (req, res) => {
