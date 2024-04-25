@@ -30,5 +30,5 @@ biereRouter.put('/bieres/:id_biere', controllerBiere.update);
 biereRouter.delete('/bieres/:id_biere', controllerBiere.delete);
 
 biereRouter.get('/bars/:id_bar/degree', controllerBiere.degree);
-
+biereRouter.get('/bars/:id_bar/bonus', controllerBiere.bonus);
 module.exports = biereRouter;
