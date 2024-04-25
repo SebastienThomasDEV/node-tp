@@ -3,8 +3,9 @@ const Bar = require('../models/Bar');
 const commandeModel = require('../models/Commande');
 const barsRepository = require('../repositories/Bars');
 const biereModel = require("../models/Biere")
-const biereCommandeModel = require("../models/BiereCommande");
 const { query } = require('express-validator');
+const biereCommandeModel = require("../models/BiereCommande")
+const ErrorService = require('../services/ErrorService');
 
 
 controllerBar.getAll = (req, res) => {
@@ -12,24 +13,24 @@ controllerBar.getAll = (req, res) => {
     if (req.query.ville) {
         Bar.find({ ville: req.query.ville })
             .then((queryResult) => res.json(queryResult))
-            .catch((err) => res.json(err));
+            .catch((err) => ErrorService.handle(err, res));
     }
     if (req.query.name) {
         Bar.find({ name: { $regex: req.query.name } })
             .then((queryResult) => res.json(queryResult))
-            .catch((err) => res.json(err));
+            .catch((err) => ErrorService.handle(err, res));
     }
 
     Bar.find()
         .then((queryResult) => res.json(queryResult))
-        .catch((err) => res.json(err));
+        .catch((err) => ErrorService.handle(err, res));
 }
 
 
 controllerBar.getBar = (req, res) => {
     Bar.find({ _id: req.params.id_bar })
         .then((queryResult) => res.json(queryResult))
-        .catch((err) => res.json(err));
+        .catch((err) => ErrorService.handle(err, res));
 };
 
 controllerBar.generate = (req, res) => {
@@ -49,48 +50,16 @@ controllerBar.generate = (req, res) => {
     const bar = barsRepository[Math.floor(Math.random() * barsRepository.length)];
     Bar.create(bar)
         .then((queryResult) => res.json(queryResult))
-        .catch((err) => res.json(err));
+        .catch((err) => ErrorService.handle(err, res));
 };
 
 controllerBar.update = (req, res) => {
 
     Bar.findByIdAndUpdate(req.params.id_bar, req.body)
         .then((queryResult) => res.json(queryResult))
-        .catch((err) => res.json("err"));
+        .catch((err) => ErrorService.handle(err, res));
 };
 
-
-/* controllerBar.remove = (req, res) => {
-
-    Bar.findByIdAndDelete(req.params.id_bar)
-        .then(() => {
-
-            // suppression des commandés dont l'id_bar est spécifié dans l'URL
-            commandeModel.find({ id_bar: req.params.id_bar })
-                .then((commandes) => {
-                    commandes.forEach((commande) => {
-                        const CommandeID = commande._id
-                        commandeModel.deleteMany({ CommandeID })
-
-                    })
-                    commandeModel.deleteMany({ id_bar: req.params.id_bar })
-                })
-                
-
-            biereModel.find({ id_bar: req.params.id_bar })
-                .then((bieres) => {
-                    bieres.forEach((biere) => { // biere est un objet = chaque biere récupérée dans la table bieres
-                        const biereID = biere._id
-                        biereCommandeModel.deleteMany({ biereID })
-                    })
-
-                    biereModel.deleteMany({ id_bar: req.params.id_bar })
-                        
-                })
-                .then(() => res.json("Bar supprimé"))
-        })
-        .catch((err) => res.json(err));
-} */
 
 controllerBar.remove = (req, res) => {
     Bar.findByIdAndDelete(req.params.id_bar)
@@ -111,15 +80,8 @@ controllerBar.remove = (req, res) => {
                 })
                 .catch((err) => res.json(err));
         })
-        .catch((err) => res.json(err));
+        .catch((err) => ErrorService.handle(err, res));
 }
-
-// Bonus 
-
-// ligne 126
-
-
-
 
 module.exports = controllerBar;
 
