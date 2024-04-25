@@ -1,5 +1,4 @@
 const Commande = require('../models/Commande');
-const Utils = require('../utils/Utils');
 
 const filterService = {
     filterCommandes: async (filtres) => {
@@ -26,8 +25,17 @@ const filterService = {
         if (filtres.name) {
             filters_list.push({name: {$regex: filtres.name}});
         }
-        return Biere.find({$and: filters_list});    
-
+        return Biere.find({$and: filters_list});
+    },
+    filterBar : async (filtres) => {
+        let filters_list = [];
+        if (filtres.ville) {
+            filters_list.push({ville: filtres.ville});
+        }
+        if (filtres.name) {
+            filters_list.push({name: {$regex: filtres.name}});
+        }
+        return Bar.find({$and: filters_list});
     }
 }
 
