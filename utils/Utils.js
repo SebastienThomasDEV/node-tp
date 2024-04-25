@@ -4,9 +4,10 @@ const PDFDocument = require('pdfkit');
 const Bar = require('../models/Bar');
 
 
-// on crée un objet Utils qui contient une méthode pour générer un document PDF et l'envoyer au client
-// il est exporté pour être utilisé dans les autres fichiers, c'est un module utilitaire
+// on crée un objet Utils qui contient, c'est un module utilitaire
+// il est exporté pour être utilisé dans les autres fichiers
 const Utils = {
+    // méthode pour générer un document PDF et l'envoyer au client
     async generatePdfAndSend(commande, res) {
         // création du document PDF
         // on formate les données de la commande
@@ -22,7 +23,11 @@ const Utils = {
                 doc.fontSize(25).text('Commande', 100, 100);
                 doc.fontSize(15).text(`Nom: ${commande.name}`);
                 doc.fontSize(15).text(`Prix: ${commande.prix}`);
-                doc.fontSize(15).text(`Bar: ${bar.name}`);
+                if (bar) {
+                    doc.fontSize(15).text(`Bar: ${bar.name}`);
+                } else {
+                    doc.fontSize(15).text('Bar: inconnu');
+                }
                 doc.fontSize(15).text(`Date: ${date}`);
                 doc.fontSize(15).text(`Status: ${commande.status}`);
                 // on termine le document pour qu'il soit prêt à être envoyé
@@ -35,6 +40,15 @@ const Utils = {
                 doc.pipe(res);
             }
         )
+    },
+    // méthode pour debugger les données reçues (à supprimer en production)
+    dd: (data) => {
+        if (process.env.NODE_ENV !== 'production') {
+            console.log(data);
+            process.exit();
+        } else {
+            return;
+        }
     }
 }
 module.exports = Utils;
