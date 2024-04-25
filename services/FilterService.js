@@ -1,5 +1,5 @@
 const Commande = require('../models/Commande');
-
+const Bar = require('../models/Bar');
 const filterService = {
     filterCommandes: async (filtres) => {
         let filters_list = [];
