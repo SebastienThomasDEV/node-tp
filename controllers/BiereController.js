@@ -78,35 +78,29 @@ controllerBiere.store = (req, res) => {
             res.status(201).json(result);
         })
         .catch((err) => ErrorService.handle(err, res));
-
     });
+};
 
 
+controllerBiere.delete = (req, res) => {
+  const biereID = req.params.id_biere;
+  
+  Biere.findByIdAndDelete(req.params.id_biere)
+  .then(() => {
+      // Suppression des commandes associées à la biere
+      BiereCommande.deleteMany({ id_biere: biereID })
+          .then(() => {
+              // Répondre une fois toutes les suppressions terminées
+              res.json("commande et bière supprimées");
+          }).catch((err) => ErrorService.handle(err, res));
+  }).catch((err) => ErrorService.handle(err, res));
+};
 
 controllerBiere.update = (req, res) => {
     Biere.findByIdAndUpdate(req.params.id_biere, req.body)
         .then((queryResult) => res.json(queryResult))
         .catch((err) => ErrorService.handle(err, res));
 };
-
-controllerBiere.delete = (req, res) => {
-    const biereID = req.params.id_biere
-    const comandesBiere = req.params.id_commande;
-    //suprimer toute les commandes qui contiennent cette bière
-    // Tout d'abord, supprimez toutes les commandes associées à la bière
-    BiereCommande.deleteMany({comandesBiere})
-        .then(() => {
-            // Après avoir supprimé les commandes, supprimez la bière elle-même
-            return Biere.findByIdAndDelete(biereID).catch((err) => ErrorService.handle(err, res));
-        })
-        .then((deleteBiere) => {
-            if (!deleteBiere) {
-                return res.status(404).json({message: "Biere non trouvée."});
-            }
-            res.status(200).json({message: "Biere suprimee."});
-        })
-        .catch((err) => ErrorService.handle(err, res));
-}
 
 //GET /bars/:id_bar/degree => Degré d'alcool moyen des bières d'un bars
 controllerBiere.degree = (req, res) => {
