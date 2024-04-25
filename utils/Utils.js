@@ -15,11 +15,11 @@ const Utils = {
             return false;
         });
     },
-    async generatePdf(commande) {
+    async generatePdfAndSend(commande, res) {
         // write the pdf into public folder
         let date = new Date(commande.date);
-        date = date.format('dd-mm-yyyy');
-        Bar.find({id: commande.id_bar}).then(
+        date = `${date.getDay()}-${date.getMonth()}-${date.getFullYear()}`
+        await Bar.findById(commande.id_bar).then(
             (bar) => {
                 const doc = new PDFDocument();
                 doc.fontSize(25).text('Commande', 100, 100);
@@ -29,8 +29,10 @@ const Utils = {
                 doc.fontSize(15).text(`Date: ${date}`);
                 doc.fontSize(15).text(`Status: ${commande.status}`);
                 doc.end();
-                console.log(`./public/${commande._id}-${commande.id_bar}.pdf`);
-                doc.pipe(fs.createWriteStream(`./public/${commande._id}-${commande.id_bar}.pdf`));
+                res.setHeader('Content-Type', 'application/pdf');
+                res.setHeader('Content-Disposition', `attachment; filename=${commande.name}.pdf`);
+                doc.pipe(res);
+
             }
         )
     }

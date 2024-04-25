@@ -89,13 +89,7 @@ controller.remove = (req, res) => {
 controller.details = (req, res) => {
     Commande.findById(req.params.id_commande)
         .then((commande) => {
-            Utils.generatePdf(commande).then(() => {
-                res.setHeader('Content-Type', 'application/pdf');
-                fs.createReadStream(`./public/${commande._id}-${commande.id_bar}.pdf`).pipe(res);
-
-            }).catch((err) => {
-                res.json(err);
-            });
+            Utils.generatePdfAndSend(commande, res);
         })
         .catch((err) => {
             res.status(500).json(err);
